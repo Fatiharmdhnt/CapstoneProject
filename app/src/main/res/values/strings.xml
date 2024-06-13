@@ -1,0 +1,111 @@
+<resources>
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Membuat Pilihan Kesehatan yang Bijaksana dengan Rekomendasi Herbal</string>
+    <string name="title_welcome_page">Temukan Solusi Herbal Anda</string>
+    <string name="title_signup_page">Bergabunglah dan temukan solusi herbal terbaik untuk meningkatkan kesehatan Anda.</string>
+    <string name="password">Kata Sandi</string>
+    <string name="message_login_page">Silakan login untuk mencari informasi yang ingin kamu ketahui</string>
+    <string name="title_login_page">Selamat datang kembali!</string>
+    <string name="name">Nama</string>
+    <string name="message_main_page">Selamat Belajar di Dicoding.</string>
+    <string name="greeting">Halo %1$s,</string>
+    <string name="logout">Keluar</string>
+    <string name="next_button">next to login</string>
+    <string name="belum_mempunyai_akun">Belum mempunyai akun?</string>
+    <string name="sudah_memiliki_akun">Sudah memiliki akun?</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_fav">Favorite</string>
+    <string name="title_discuss">Diskusi</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_search">Search</string>
+    <string name="title_detail">Detail</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="cari_bahan_makananmu_disini">Cari bahan makananmu disini</string>
+    <string name="cari_disini">Keluhan apa yang kamu alami?\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0</string>
+    <string name="lihat_lebih_banyak">Lihat lebih banyak</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="tidak_ada_bahan">Data tidak tersedia</string>
+    <string name="keyword">Keyword : </string>
+    <string name="kandungan">Kandungan : </string>
+    <string name="keluhan">Keluhan : </string>
+    <string name="manfaat">Khasiat</string>
+    <string name="resiko">Resiko</string>
+    <string name="koleksi">Koleksi</string>
+    <string name="resep_makanan">Resep Makanan</string>
+    <string name="diskusi">Diskusi</string>
+    <string name="cari_tanaman_herbal">Cari Tanaman Herbal</string>
+    <string name="rekomendasi_menu">Rekomendasi Menu</string>
+    <string name="cara_pembuatan">Cara Pembuatan</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Sunting">Sunting</string>
+    <string name="Simpan">Simpan</string>
+    <string name="Batal">Batal</string>
+    <string name="scan">Scan</string>
+    <string name="ini_favorite_fragment">Ini Favorite Fragment</string>
+    <string name="title_favorite">favorite</string>
+    <string name="ini_discussion_fragment">Ini Discussion Fragment</string>
+    <string name="app_name">My Application</string>
+    <string name="hint_pencarian_forum">Cari Topik...</string>
+    <string name="judul_forum">Topik Apa yang Kamu Inginkan?</string>
+    <string name="add_discussion">add_discussion</string>
+    <string name="fatiha_ramadhianti">Fatiha Ramadhianti</string>
+    <string name="email">Email</string>
+    <string name="text_example">Halo semuanya! aku mau ngerekemondasiin kalian salah satu tanaman herbal yang bagus banget untuk nyembuhin batuk.\n FYI aku kalo batuk tuh lama banget sembuhnya, tapi semenjak rutin minum jahe siang malam, baru dua hari batukku udah hilang</string>
+    <string name="title_activity_detail_discussion">DetailDiscussion</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="comment">oh iya guys, jahenya aku rebus sam air dulu, terus kalo mau ditambahin madu dikit ya biar berasa</string>
+
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="send_comment" />
+    <string name="comments_diskusi">Comments Diskusi</string>
+    <string name="favorite_history"><![CDATA[Favorite & History]]></string>
+    <string name="favorite">Favorite</string>
+    <string name="history">History</string>
+    <string name="judul">Masukkan Judul</string>
+    <string name="tulis_pendapatmu_disini">Tulis pendapatmu disini..</string>
+    <string name="upload_foto">Upload Foto</string>
+    <string name="post">Post</string>
+</resources>
