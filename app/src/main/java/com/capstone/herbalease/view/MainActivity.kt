@@ -3,6 +3,7 @@ package com.capstone.herbalease.view
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
         navView.setupWithNavController(navController)
 
         navView.setOnItemSelectedListener { menuItem ->

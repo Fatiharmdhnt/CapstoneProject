@@ -1,6 +1,7 @@
 package com.capstone.herbalease.view.signup
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -9,7 +10,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.capstone.herbalease.R
 import com.capstone.herbalease.data.model.RegisterRequest
 import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.login.LoginActivity
@@ -82,15 +85,17 @@ class SignupActivity : AppCompatActivity() {
                                 is Result.Success -> {
                                     showLoading(false)
                                     val email = binding.emailEditText.text.toString()
-                                    AlertDialog.Builder(this@SignupActivity).apply {
-                                        setTitle("Yeah!")
-                                        setMessage("Your account with $email is done. Click next for login.")
-                                        setPositiveButton("Next") { _, _ ->
+                                    val alertDialog = AlertDialog.Builder(this@SignupActivity).apply {
+                                        setTitle("Berhasil!")
+                                        setMessage("Akun Anda dengan $email sudah selesai. Klik berikutnya untuk login.\n")
+                                        setPositiveButton("Lanjut") { _, _ ->
                                             finish()
                                         }
                                         create()
-                                        show()
-                                    }
+                                    }.show()
+
+                                    val greenColor = ContextCompat.getColor(this@SignupActivity, R.color.green)
+                                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(greenColor)
                                 }
                                 is Result.Error -> {
                                     showLoading(false)
@@ -104,7 +109,9 @@ class SignupActivity : AppCompatActivity() {
             logInPromptTextView.setOnClickListener {
                 val intent = Intent(this@SignupActivity, LoginActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right)
             }
+
         }
     }
 }
