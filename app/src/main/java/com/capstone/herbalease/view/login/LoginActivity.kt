@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.capstone.herbalease.R
 import com.capstone.herbalease.databinding.ActivityLoginBinding
 import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.signup.SignupActivity
@@ -67,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                     password.error.isNullOrEmpty().not() || password.text.isNullOrEmpty() ->
                         showToast("Fill password correctly!")
 
-                    else ->{
+                    else -> {
                         val loginData = LoginRequest(emailEditText.text.toString(),
                             password.text.toString())
                         viewModel.login(
@@ -86,10 +88,10 @@ class LoginActivity : AppCompatActivity() {
                                             result.data.loginResult!!.token
                                         )
                                     )
-                                    AlertDialog.Builder(this@LoginActivity).apply {
-                                        setTitle("Yeah!")
-                                        setMessage("Login Success. Let see what your friends doing today!")
-                                        setPositiveButton("Next") { _, _ ->
+                                    val alertDialog = AlertDialog.Builder(this@LoginActivity).apply {
+                                        setTitle("Login Berhasil")
+                                        setMessage("Mari kita jelajahi dunia tanaman herbal yang menakjubkan hari ini")
+                                        setPositiveButton("Lanjut") { _, _ ->
                                             val intent = Intent(context, MainActivity::class.java)
                                             intent.flags =
                                                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -97,15 +99,17 @@ class LoginActivity : AppCompatActivity() {
                                             finish()
                                         }
                                         create()
-                                        show()
-                                    }
+                                    }.show()
+
+                                    val greenColor = ContextCompat.getColor(this@LoginActivity, R.color.green)
+                                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(greenColor)
                                 }
                                 is Result.Error -> {
                                     showLoading(false)
                                     showToast(result.error)
                                 }
                             }
-                    }
+                        }
                     }
                 }
             }
@@ -113,7 +117,9 @@ class LoginActivity : AppCompatActivity() {
             signupPromptTextView.setOnClickListener {
                 val intent = Intent(this@LoginActivity, SignupActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left)
             }
+
         }
     }
 }

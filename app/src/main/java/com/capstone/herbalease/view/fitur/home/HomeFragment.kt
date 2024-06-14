@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
                     }
                     is Result.Success -> {
                         loadingDialog.dismiss()
-                        binding.tvUsername.text = "Hi, ${result.data.name}"
+                        binding.tvUsername.text = "Hi, ${result.data.name} !"
                         Glide.with(requireContext()).load(result.data.profilePictureUrl?:"https://storage.googleapis.com/herbalease-image/Foto-Profil/blank-profile-picture-973460_1280.png")
                             .override(200,200).into(binding.ivProfile)
                     }

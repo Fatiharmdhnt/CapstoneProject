@@ -18,6 +18,7 @@
         android:textAlignment="textStart"
         android:textColor="@color/green"
         android:textSize="14sp"
+        android:fontFamily="@font/inter_medium"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
