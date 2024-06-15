@@ -9,13 +9,13 @@ data class ForumDiscussion(
     val photoProfileUrl : String,
     val title : String,
     val description : String,
-    val keyword : List<Keywords>,
+    val keyword : List<Keyword>,
     val photoDiscussionUrl : String,
     val comments : List<Comments>
 ) : Parcelable
 
 @Parcelize
-data class Keywords(
+data class Keyword(
     val keyword : String
 ) : Parcelable
 

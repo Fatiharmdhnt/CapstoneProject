@@ -2,120 +2,236 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".view.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/layout_top"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-16dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/layout_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/iv_logo"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_logo"
-                android:scaleType="centerInside"
-                android:contentDescription="Logo" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hi, "
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:id="@+id/tv_username"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="2dp"
+                    app:cardCornerRadius="100dp">
+
+                    <ImageView
+                        android:id="@+id/iv_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_user" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <com.google.android.material.search.SearchBar
+                android:id="@+id/searchBar"
+                style="@style/Widget.Material3.SearchBar.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:backgroundTint="@color/white"
+                android:hint="@string/cari_disini"
+                android:layoutDirection="rtl"
+                app:strokeColor="@color/green"
+                android:textAlignment="textStart"
+                app:layout_scrollFlags="enterAlways" />
 
             <TextView
-                android:id="@+id/tv_logo"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="HerbalEase"
-                android:textColor="@color/black"
-                android:textSize="12sp"
+                android:text="@string/koleksi"
+                android:textColor="@color/green"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_headline_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_ingredient_row" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/diskusi"
+                android:textColor="@color/green"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="end"
-                android:layout_margin="2dp"
-                app:cardCornerRadius="100dp">
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="0dp"
+                card_view:cardCornerRadius="15dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:elevation="15dp">
 
-                <ImageView
-                    android:id="@+id/iv_profile"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_user" />
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/photoProfile"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="330dp"
+                        android:src="@drawable/a"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintVertical_bias="0.0"
+                        card_view:layout_constraintBottom_toBottomOf="parent"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toTopOf="parent"
+                        card_view:shapeAppearanceOverlay="@style/roundedImageView" />
+
+                    <TextView
+                        android:id="@+id/userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/fatiha_ramadhianti"
+                        android:textSize="20sp"
+                        app:layout_constraintHorizontal_bias="0.317"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toEndOf="@+id/photoProfile"
+                        card_view:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="68dp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="@string/jahe"
+                        android:textSize="18sp"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintHorizontal_bias="0.018"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lines="7"
+                        android:text="@string/text_example"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/title" />
+
+                    <ImageView
+                        android:id="@+id/imageDiscussion"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="312dp"
+                        android:layout_marginEnd="5dp"
+                        android:scaleType="fitCenter"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintHorizontal_bias="1.0"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toTopOf="parent"
+                        card_view:srcCompat="@android:drawable/ic_menu_gallery" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/keyword"
+                        android:layout_width="49dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        android:scrollbars="horizontal"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintHorizontal_bias="0.0"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/description" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:orientation="horizontal"
+                        card_view:layout_constraintBottom_toBottomOf="parent"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/imageDiscussion"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_insert_comment_24"/>
+                        <TextView
+                            android:id="@+id/comments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3 Comments"
+                            android:layout_marginStart="7dp"/>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
 
+            <Button
+                android:id="@+id/moreDiskusi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/lihat_lebih_banyak"
+                android:textSize="10sp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center_horizontal"/>
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginLeft="16dp"
-            android:fontFamily="@font/inter_bold"
-            android:text="@string/hi"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_top" />
-
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/searchBar"
-            style="@style/Widget.Material3.SearchBar.Outlined"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginTop="0dp"
-            android:backgroundTint="@color/white"
-            android:hint="@string/cari_disini"
-            android:layoutDirection="rtl"
-            android:textAlignment="textStart"
-            app:layout_scrollFlags="enterAlways"
-            app:strokeColor="@color/green"
-            app:layout_constraintTop_toBottomOf="@id/tv_username"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/koleksi"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/inter_bold"
-            android:textColor="@color/green"
-            android:textSize="20sp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_headline_ingredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_ingredient_row" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/diskusi"
-            android:textColor="@color/green"
-            android:textSize="20sp"
-            android:fontFamily="@font/inter_bold"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

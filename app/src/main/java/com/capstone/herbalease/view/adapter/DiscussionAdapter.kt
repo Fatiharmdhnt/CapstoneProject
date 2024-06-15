@@ -1,4 +1,4 @@
-package com.capstone.herbalease.view.fitur.diskusi
+package com.capstone.herbalease.view.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.herbalease.data.model.ForumDiscussion
 import com.capstone.herbalease.databinding.FragmentItemBinding
-import com.capstone.herbalease.view.adapter.KeywordsAdapter
 
 class DiscussionAdapter : RecyclerView.Adapter<DiscussionAdapter.ViewHolder>() {
 
@@ -31,6 +30,7 @@ class DiscussionAdapter : RecyclerView.Adapter<DiscussionAdapter.ViewHolder>() {
             binding.root.setOnClickListener {
                 onItemClickCallback.onItemClick(preview)
             }
+
             binding.userName.text = preview.name
             Glide.with(binding.photoProfile.context).load(preview.photoProfileUrl)
                 .into(binding.photoProfile)
@@ -60,6 +60,7 @@ class DiscussionAdapter : RecyclerView.Adapter<DiscussionAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = listDiscussion.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setListDiscussion(discussions: List<ForumDiscussion>) {
         listDiscussion.clear()
         listDiscussion.addAll(discussions)
