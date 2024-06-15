@@ -89,10 +89,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/keyword"
-            android:layout_width="49dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
             android:scrollbars="horizontal"
+            android:orientation="horizontal"
+            card_view:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="parent"

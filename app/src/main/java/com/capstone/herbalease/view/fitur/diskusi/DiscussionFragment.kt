@@ -40,7 +40,7 @@ class DiscussionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Set List Discussion
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.adapter = adapter
         setListDiscussion()
         //End Set List Discussion

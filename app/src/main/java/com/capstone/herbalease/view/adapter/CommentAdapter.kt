@@ -1,18 +1,27 @@
 package com.capstone.herbalease.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.herbalease.data.model.Comments
+import com.capstone.herbalease.data.model.ForumDiscussion
 import com.capstone.herbalease.databinding.CommentItemBinding
 
 class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 
     private val listComment = ArrayList<Comments>()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setComment(comment: List<Comments>) {
+        listComment.clear()
+        listComment.addAll(comment)
+        notifyDataSetChanged()
+    }
+
     class ViewHolder (private val binding: CommentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(preview: Comments){
-
             binding.userName.text = preview.name
             Glide.with(itemView).load(preview.photoProfileUrl).centerCrop().into(binding.shapeableImageView)
             binding.comment.text = preview.comments
