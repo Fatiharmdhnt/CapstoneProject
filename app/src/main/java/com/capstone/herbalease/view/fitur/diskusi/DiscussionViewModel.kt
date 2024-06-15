@@ -14,4 +14,8 @@ class DiscussionViewModel : ViewModel(){
     fun setDiscussion(){
         _listDiscussion.postValue(FakeData.discussionList)
     }
+
+    fun Discussion(){
+
+    }
 }
