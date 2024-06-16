@@ -125,4 +125,8 @@ class HomeFragment : Fragment() {
             adapter = headlineIngredientsAdapter
         }
     }
+
+    private fun setLastestDiscussion(){
+
+    }
 }

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.herbalease.data.model.Keywords
+import com.capstone.herbalease.data.model.Keyword
 import com.capstone.herbalease.databinding.ItemKeywordLayoutBinding
 
 
@@ -50,9 +50,9 @@ class KeywordsAdapter :
         }
     }
 
-    private val listKeyword = ArrayList<Keywords>()
+    private val listKeyword = ArrayList<Keyword>()
 
-    fun setListKeyword(key : List<Keywords>){
+    fun setListKeyword(key : List<Keyword>){
         key.forEach {
             listKeyword.add(it)
         }

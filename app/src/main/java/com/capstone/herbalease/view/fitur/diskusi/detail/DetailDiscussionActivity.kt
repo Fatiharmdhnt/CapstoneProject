@@ -23,10 +23,11 @@ class DetailDiscussionActivity : AppCompatActivity() {
         binding = ActivityDetailDiscussionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dataDiscussion = intent.getSerializableExtra(EXTRA_DISCUSSION) as ForumDiscussion
+        dataDiscussion = intent.getParcelableExtra<ForumDiscussion>(EXTRA_DISCUSSION)!!
         adapterKeyword = KeywordAdapter()
+        adapterComment = CommentAdapter()
         adapterKeyword.setListKeyword(dataDiscussion.keyword)
-        adapterComment.setComment(dataDiscussion.comments)
+        dataDiscussion.comments?.let { adapterComment.setComment(it) }
         setDiscussion()
     }
 

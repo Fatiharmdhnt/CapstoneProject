@@ -1,5 +1,6 @@
 package com.capstone.herbalease.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +11,13 @@ class KeywordAdapter : RecyclerView.Adapter<KeywordAdapter.ViewHolder>(){
 
     private val listKeyword = ArrayList<Keyword>()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setListKeyword(key : List<Keyword>){
+        listKeyword.clear()
         key.forEach {
             listKeyword.add(it)
         }
+        notifyDataSetChanged()
     }
     class ViewHolder(private val binding: KeywordItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(preview: Keyword) {

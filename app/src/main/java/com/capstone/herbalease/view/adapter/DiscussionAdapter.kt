@@ -38,14 +38,14 @@ class DiscussionAdapter : RecyclerView.Adapter<DiscussionAdapter.ViewHolder>() {
             binding.description.text = preview.description
 
             // Initialize KeywordAdapter and set it to the RecyclerView
-            val keywordAdapter = KeywordsAdapter()
+            val keywordAdapter = KeywordAdapter()
             binding.keyword.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.keyword.adapter = keywordAdapter
             keywordAdapter.setListKeyword(preview.keyword)
 
             Glide.with(binding.imageDiscussion.context).load(preview.photoDiscussionUrl)
                 .into(binding.imageDiscussion)
-            binding.comments.text = "${preview.comments.size} Comments"
+            binding.comments.text = "${preview.comments?.size} Comments"
         }
     }
 

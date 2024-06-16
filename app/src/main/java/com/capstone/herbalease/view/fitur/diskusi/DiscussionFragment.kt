@@ -1,5 +1,6 @@
 package com.capstone.herbalease.view.fitur.diskusi
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
 import com.capstone.herbalease.data.model.ForumDiscussion
 import com.capstone.herbalease.databinding.FragmentDiscussionBinding
-import com.capstone.herbalease.databinding.KeywordItemBinding
 import com.capstone.herbalease.view.adapter.DiscussionAdapter
 import com.capstone.herbalease.view.fitur.diskusi.detail.DetailDiscussionActivity
 import com.capstone.herbalease.view.fitur.diskusi.post.AddDicussionActivity
@@ -40,13 +40,16 @@ class DiscussionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Set List Discussion
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
         setListDiscussion()
         //End Set List Discussion
 
         binding.addDiscussion.setOnClickListener {
-            startActivity(Intent(requireContext(), AddDicussionActivity::class.java))
+            startActivityForResult(
+                Intent(requireContext(), AddDicussionActivity::class.java),
+                ADD_DISCUSSION_REQUEST_CODE
+            )
         }
     }
 
@@ -63,5 +66,16 @@ class DiscussionFragment : Fragment() {
         viewModel.listDiscussion.observe(viewLifecycleOwner, Observer{
             adapter.setListDiscussion(it)
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ADD_DISCUSSION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            viewModel.setDiscussion()
+        }
+    }
+
+    companion object {
+        private const val ADD_DISCUSSION_REQUEST_CODE = 1
     }
 }
