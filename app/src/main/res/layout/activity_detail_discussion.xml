@@ -221,11 +221,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_comment"
-            android:layout_width="350dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:lines="2"
             android:hint="@string/comments_diskusi"
-            android:paddingHorizontal="10dp"
+            android:paddingHorizontal="15dp"
             android:background="@drawable/rounded_50_with_stroke"/>
 
         <ImageButton

@@ -1,15 +1,17 @@
 package com.capstone.herbalease.view.fitur.diskusi.detail
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.capstone.herbalease.data.model.Comments
 import com.capstone.herbalease.data.model.ForumDiscussion
 import com.capstone.herbalease.databinding.ActivityDetailDiscussionBinding
+import com.capstone.herbalease.di.FakeData
 import com.capstone.herbalease.view.adapter.CommentAdapter
 import com.capstone.herbalease.view.adapter.KeywordAdapter
+import com.capstone.herbalease.view.fitur.diskusi.DiscussionViewModel
 
 class DetailDiscussionActivity : AppCompatActivity() {
 
@@ -17,11 +19,14 @@ class DetailDiscussionActivity : AppCompatActivity() {
     private lateinit var binding : ActivityDetailDiscussionBinding
     private lateinit var adapterKeyword : KeywordAdapter
     private lateinit var adapterComment : CommentAdapter
+    private lateinit var viewModel: DetailDiscussionViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailDiscussionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this).get(DetailDiscussionViewModel::class.java)
 
         dataDiscussion = intent.getParcelableExtra<ForumDiscussion>(EXTRA_DISCUSSION)!!
         adapterKeyword = KeywordAdapter()
@@ -29,6 +34,10 @@ class DetailDiscussionActivity : AppCompatActivity() {
         adapterKeyword.setListKeyword(dataDiscussion.keyword)
         dataDiscussion.comments?.let { adapterComment.setComment(it) }
         setDiscussion()
+
+        binding.buttonSendComment.setOnClickListener {
+            postComment()
+        }
     }
 
 
@@ -55,6 +64,24 @@ class DetailDiscussionActivity : AppCompatActivity() {
         //komentar
         binding.commentUser.layoutManager = LinearLayoutManager(this)
         binding.commentUser.adapter = adapterComment
+    }
+
+    private fun postComment(){
+        if (binding.editTextComment.text != null){
+            viewModel.sendComment(binding.editTextComment.text.toString(), dataDiscussion.title)
+            binding.editTextComment.text!!.clear()
+            FakeData.discussionList.forEach {
+                if (it.title == dataDiscussion.title){
+                    it.comments?.let { it1 -> adapterComment.setComment(it1) }
+                }
+            }
+        } else {
+            makeToast("Tolong Isi Komentar Anda Terlebih Dahulu")
+        }
+    }
+
+    private fun makeToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object{

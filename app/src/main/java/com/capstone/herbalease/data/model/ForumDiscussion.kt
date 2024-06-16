@@ -11,7 +11,7 @@ data class ForumDiscussion(
     val description: String,
     val keyword: List<Keyword>,
     val photoDiscussionUrl: String?,
-    val comments : List<Comments>?
+    var comments : MutableList<Comments>?
 ) : Parcelable
 
 @Parcelize

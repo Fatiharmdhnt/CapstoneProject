@@ -244,7 +244,7 @@ object FakeData {
         Keyword("warna"),
         Keyword("Berubah")
     )
-    val commentList = listOf<Comments>(
+    var commentList = listOf<Comments>(
         Comments(
             "Aisyah",
             "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg",
@@ -256,6 +256,7 @@ object FakeData {
             "Kenyataanya emang iya"
         )
     )
+    val komen : MutableList<Comments> = commentList.toMutableList()
     var discussionList : List<ForumDiscussion> = listOf(
         ForumDiscussion(
             "Ben",
@@ -264,7 +265,7 @@ object FakeData {
             "Bunglon bisa berubah warna dan merayap",
             keywordList,
             "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            commentList
+            komen
         ),
         ForumDiscussion(
             "Benyud",
@@ -273,7 +274,7 @@ object FakeData {
             "Gua pesan Go-Food tapi ngga sambelnya, yang bener aje, rugi dong",
             keywordList,
             "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            commentList
+            komen
         )
     )
 }
