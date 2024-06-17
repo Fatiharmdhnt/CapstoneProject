@@ -43,6 +43,8 @@ android {
 }
 
 val cameraxVersion = "1.2.3"
+val roomVersion = "2.2.6"
+
 dependencies {
     // Image Loading
     implementation("com.github.bumptech.glide:glide:4.16.0")
@@ -89,4 +91,11 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.github.Dhaval2404:ImagePicker:v2.1")
+
+    //Room Database
+    implementation ("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor ("androidx.room:room-compiler:$roomVersion")
+    androidTestImplementation ("androidx.room:room-testing:$roomVersion")
+    implementation ("androidx.room:room-ktx:$roomVersion")
+    kapt ("androidx.room:room-compiler:$roomVersion")
 }

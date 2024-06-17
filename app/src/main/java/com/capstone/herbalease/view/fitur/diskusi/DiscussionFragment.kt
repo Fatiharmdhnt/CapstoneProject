@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -51,6 +52,40 @@ class DiscussionFragment : Fragment() {
                 ADD_DISCUSSION_REQUEST_CODE
             )
         }
+
+        binding.filteredSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(!query.isNullOrBlank()){
+                    viewModel.searchDiscussion(query)
+                    viewModel.listDiscussion.observe(viewLifecycleOwner, Observer {
+                        adapter.setListDiscussion(it)
+                    })
+                } else if (query == ""){
+                    viewModel.setDiscussion()
+                    viewModel.listDiscussion.observe(viewLifecycleOwner, Observer {
+                        adapter.setListDiscussion(it)
+                    })
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(!newText.isNullOrBlank()){
+                    viewModel.searchDiscussion(newText)
+                    viewModel.listDiscussion.observe(viewLifecycleOwner, Observer {
+                        adapter.setListDiscussion(it)
+                    })
+                } else if (newText == ""){
+                    viewModel.setDiscussion()
+                    viewModel.listDiscussion.observe(viewLifecycleOwner, Observer {
+                        adapter.setListDiscussion(it)
+                    })
+                }
+                return true
+            }
+
+
+        })
     }
 
     private fun setListDiscussion(){

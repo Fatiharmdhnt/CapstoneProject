@@ -126,7 +126,4 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setLastestDiscussion(){
-
-    }
 }

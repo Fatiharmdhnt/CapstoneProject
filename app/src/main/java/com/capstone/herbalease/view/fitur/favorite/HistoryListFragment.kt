@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
@@ -19,6 +21,7 @@ class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview){
 //    private lateinit var viewModel:
     private lateinit var adapter: SearchIngredientsAdapter
     private lateinit var listHistory : List<Ingredients>
+    private lateinit var viewModel: FavoriteHistoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,11 +30,29 @@ class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview){
     ): View? {
         _binding = FavoriteItemRecyclerviewBinding.inflate(inflater, container,false)
         adapter = SearchIngredientsAdapter()
+        viewModel = ViewModelProvider(this).get(FavoriteHistoryViewModel::class.java)
         setListeners()
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var listIngredient : MutableList<Ingredients>? = null
+        viewModel.listHistory.observe(viewLifecycleOwner, Observer { it ->
+            it.forEach {
+                val ingredients = Ingredients(
+                    it.id,
+                    it.name,
+                    it.imageUrl,
+                    it.description,
+                    it.listKhasiat,
+                    it.listKeywords,
+                    it.listKandungan,
+                    it.listKeluhan
+                )
+                listIngredient?.add(ingredients)
+            }
+            listHistory = listIngredient!!
+        })
 
         adapter.submitList(listHistory)
 
