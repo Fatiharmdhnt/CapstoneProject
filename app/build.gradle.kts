@@ -85,6 +85,7 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
     implementation("androidx.camera:camera-core:1.3.3")
+    implementation(libs.androidx.room.common)
 
     // Testing
     testImplementation("junit:junit:4.13.2")

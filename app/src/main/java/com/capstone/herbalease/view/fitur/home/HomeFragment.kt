@@ -55,12 +55,17 @@ class HomeFragment : Fragment() {
                     is Result.Loading -> {
                         loadingDialog.show()
                     }
+
                     is Result.Success -> {
                         loadingDialog.dismiss()
                         binding.tvUsername.text = "Hi, ${result.data.name} !"
-                        Glide.with(requireContext()).load(result.data.profilePictureUrl?:"https://storage.googleapis.com/herbalease-image/Foto-Profil/blank-profile-picture-973460_1280.png")
-                            .override(200,200).into(binding.ivProfile)
+                        Glide.with(requireContext()).load(
+                            result.data.profilePictureUrl
+                                ?: "https://storage.googleapis.com/herbalease-image/Foto-Profil/blank-profile-picture-973460_1280.png"
+                        )
+                            .override(200, 200).into(binding.ivProfile)
                     }
+
                     is Result.Error -> {
                         loadingDialog.dismiss()
                         showToast(result.error)
@@ -125,5 +130,4 @@ class HomeFragment : Fragment() {
             adapter = headlineIngredientsAdapter
         }
     }
-
 }

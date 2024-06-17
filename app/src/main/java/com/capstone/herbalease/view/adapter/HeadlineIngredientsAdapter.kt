@@ -8,48 +8,46 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.capstone.herbalease.R
-import com.capstone.herbalease.data.pref.Ingredients
+import com.capstone.herbalease.data.model.AppResponseItem
 import com.capstone.herbalease.databinding.ItemIngredientRowBinding
 import com.capstone.herbalease.databinding.LoadMoreLayoutBinding
 
 
 class HeadlineIngredientsAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var listIngredients = mutableListOf<Ingredients>()
+    private var listIngredients = mutableListOf<AppResponseItem>()
 
     private lateinit var headlineViewHolder: HeadlineViewHolder
     private lateinit var buttonViewHolder: ButtonViewHolder
 
-    var onItemClick: ((Ingredients) -> Unit)? = null
-    var onLoadMoreClick: ((List<Ingredients>) -> Unit)? = null
+    var onItemClick: ((AppResponseItem) -> Unit)? = null
+    var onLoadMoreClick: ((List<AppResponseItem>) -> Unit)? = null
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(ingredientsListData: List<Ingredients>) {
+    fun setData(ingredientsListData: List<AppResponseItem>) {
         listIngredients.clear()
         listIngredients.addAll(ingredientsListData)
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        headlineViewHolder = HeadlineViewHolder(
-            ItemIngredientRowBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-
-        buttonViewHolder = ButtonViewHolder(
-            LoadMoreLayoutBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-
         return if (viewType == INGREDIENTS) {
+            headlineViewHolder = HeadlineViewHolder(
+                ItemIngredientRowBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
             headlineViewHolder
         } else {
+            buttonViewHolder = ButtonViewHolder(
+                LoadMoreLayoutBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
             buttonViewHolder
         }
     }
@@ -67,9 +65,9 @@ class HeadlineIngredientsAdapter :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == listIngredients.size -1) {
+        return if (position == listIngredients.size - 1) {
             LOAD_MORE
-        } else{
+        } else {
             INGREDIENTS
         }
     }
@@ -78,7 +76,7 @@ class HeadlineIngredientsAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             binding.apply {
-                tvIngredient.text = listIngredients[position].name
+                tvIngredient.text = listIngredients[position].nama
                 Glide.with(root)
                     .load(listIngredients[position].imageUrl)
                     .placeholder(R.drawable.dummy_image)
@@ -94,8 +92,7 @@ class HeadlineIngredientsAdapter :
 
     inner class ButtonViewHolder(
         private var binding: LoadMoreLayoutBinding
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun showButton() {
             binding.btnLoadMoreHeadline.visibility = View.VISIBLE
             binding.btnLoadMoreHeadline.setOnClickListener {

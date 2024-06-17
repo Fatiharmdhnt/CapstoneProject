@@ -8,18 +8,18 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.capstone.herbalease.data.pref.Ingredients
+import com.capstone.herbalease.data.model.AppResponseItem
 import com.capstone.herbalease.databinding.ActivityIngredientsDetailBinding
 import com.capstone.herbalease.view.adapter.BenefitAdapter
 import com.capstone.herbalease.view.adapter.KeywordsAdapter
 
 class IngredientsDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIngredientsDetailBinding
-    private val ingredients by lazy {
+    private val ingredient by lazy {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(EXTRA_INGREDIENTS)
+            intent.getParcelableExtra(EXTRA_INGREDIENT)
         } else {
-            intent.getParcelableExtra(EXTRA_INGREDIENTS, Ingredients::class.java)
+            intent.getParcelableExtra(EXTRA_INGREDIENT, AppResponseItem::class.java)
         }
     }
 
@@ -39,62 +39,68 @@ class IngredientsDetailActivity : AppCompatActivity() {
 
     private fun setViews() {
         binding.apply {
-            ingredients?.let {
+            ingredient?.let {
                 Glide.with(root)
                     .load(it.imageUrl)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(ivIngredient)
 
-                tvNameIngredients.text = it.name
-                tvDesc.text = it.description
+                tvNameIngredients.text = it.nama
+                tvDesc.text = it.deskripsi
 
-                if (it.listKandungan.isNotEmpty()) {
-                    layoutKandugnan.isVisible = true
+                it.kandungan?.let { kandungan ->
+                    if (kandungan.isNotEmpty()) {
+                        layoutKandugnan.isVisible = true
 
-                    val kandunganAdapter = KeywordsAdapter()
-                    kandunganAdapter.submitList(it.listKandungan)
+                        val kandunganAdapter = KeywordsAdapter()
+                        kandunganAdapter.submitList(kandungan.split(", "))
 
-                    rvKandungan.apply {
-                        layoutManager =
-                            LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
-                        adapter = kandunganAdapter
+                        rvKandungan.apply {
+                            layoutManager =
+                                LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
+                            adapter = kandunganAdapter
+                        }
+                    } else {
+                        layoutKandugnan.isVisible = false
                     }
-                } else {
-                    layoutKandugnan.isVisible = false
                 }
 
-                if (it.listKhasiat.isNotEmpty()) {
-                    sectionBenefit.isVisible = true
+                it.khasiat?.let { khasiat ->
+                    if (khasiat.isNotEmpty()) {
+                        sectionBenefit.isVisible = true
 
-                    val benefitAdapter = BenefitAdapter()
-                    benefitAdapter.submitList(it.listKhasiat)
+                        val benefitAdapter = BenefitAdapter()
+                        benefitAdapter.submitList(khasiat.split(", "))
 
-                    rvBenefit.apply {
-                        layoutManager =
-                            LinearLayoutManager(this@IngredientsDetailActivity)
-                        adapter = benefitAdapter
+                        rvBenefit.apply {
+                            layoutManager =
+                                LinearLayoutManager(this@IngredientsDetailActivity)
+                            adapter = benefitAdapter
+                        }
+                    } else {
+                        sectionBenefit.isVisible = false
                     }
-                } else {
-                    sectionBenefit.isVisible = false
                 }
 
-                if (it.listKeluhan.isNotEmpty()) {
-                    layoutKeluhan.isVisible = true
+                it.keyword?.let { keyword ->
+                    if (keyword.isNotEmpty()) {
+                        layoutKeluhan.isVisible = true
 
-                    val keluhanAdapter = KeywordsAdapter()
-                    keluhanAdapter.submitList(it.listKeluhan)
+                        val keluhanAdapter = KeywordsAdapter()
+                        keluhanAdapter.submitList(keyword.split(", "))
 
-                    rvKeluhan.apply {
-                        layoutManager =
-                            LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
-                        adapter = keluhanAdapter
+                        rvKeluhan.apply {
+                            layoutManager =
+                                LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
+                            adapter = keluhanAdapter
+                        }
+                    } else {
+                        layoutKeluhan.isVisible = false
                     }
-                } else {
-                    layoutKeluhan.isVisible = true
                 }
 
             } ?: run {
-
+                // Handle the case when ingredient is null
             }
         }
     }
@@ -106,6 +112,6 @@ class IngredientsDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_INGREDIENTS = "extra_ingredients"
+        const val EXTRA_INGREDIENT = "extra_ingredient"
     }
 }

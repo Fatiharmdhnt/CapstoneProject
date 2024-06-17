@@ -17,13 +17,8 @@ import com.capstone.herbalease.view.ingredients_detail.IngredientsDetailActivity
 class SearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchBinding
     private val isFromSearch by lazy { intent.getBooleanExtra(IS_FROM_SEARCH, false) }
-
-    private val viewModel by viewModels<SearchViewModel> {
-        ViewModelFactory(this)
-    }
-
+    private val viewModel by viewModels<SearchViewModel> { ViewModelFactory(this) }
     private val searchIngredientsAdapter = SearchIngredientsAdapter()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,20 +43,14 @@ class SearchActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.apply {
             isLoading.observe(this@SearchActivity) {
-                if (it) {
-                    // Handle ketika Loading disini
-                } else {
-                    // Handle ketika selesai Loading disini
-                }
+                showLoading(it)
             }
-
             searchedIngredients.observe(this@SearchActivity) {
                 searchIngredientsAdapter.submitList(it)
                 binding.emptyView.isVisible = it.isEmpty()
             }
-
             errorMessage.observe(this@SearchActivity) {
-                // Handling error disini
+                // Handle error here
             }
         }
     }
@@ -69,7 +58,7 @@ class SearchActivity : AppCompatActivity() {
     private fun setSearchBar() {
         binding.svAccounts.addTextChangedListener(onTextChanged = { query, _, _, _ ->
             if (query.isNullOrEmpty()) {
-                viewModel.searchedIngredients.postValue(FakeData.generateIngredients())
+                viewModel.loadInitialIngredients()
             } else {
                 viewModel.searchIngredients(query.toString(), isFromSearch)
             }
@@ -85,20 +74,15 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.apply {
-            searchIngredientsAdapter.onIngredientsClick = { ingredients ->
+            searchIngredientsAdapter.onIngredientsClick = { ingredient ->
                 val iDetailIngredients =
                     Intent(this@SearchActivity, IngredientsDetailActivity::class.java)
-                iDetailIngredients.putExtra(
-                    IngredientsDetailActivity.EXTRA_INGREDIENTS,
-                    ingredients
-                )
+                iDetailIngredients.putExtra(IngredientsDetailActivity.EXTRA_INGREDIENT, ingredient)
                 startActivity(iDetailIngredients)
             }
-
             btnBack.setOnClickListener { finish() }
         }
     }
-
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressbar.isVisible = isLoading

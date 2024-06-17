@@ -17,7 +17,6 @@ import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.SearchIngredientsAdapter
 import com.capstone.herbalease.view.ingredients_detail.IngredientsDetailFragment
 
-
 class SearchFragment : Fragment() {
     private var _binding: ActivitySearchBinding? = null
     private val binding get() = _binding!!
@@ -46,7 +45,6 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-
     private fun checkIntentValues() {
         binding.apply {
             svAccounts.hint =
@@ -58,11 +56,7 @@ class SearchFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.apply {
             isLoading.observe(viewLifecycleOwner) {
-                if (it) {
-                    // Handle ketika Loading disini
-                } else {
-                    // Handle ketika selesai Loading disini
-                }
+                showLoading(it)
             }
 
             searchedIngredients.observe(viewLifecycleOwner) {
@@ -71,7 +65,7 @@ class SearchFragment : Fragment() {
             }
 
             errorMessage.observe(viewLifecycleOwner) {
-                // Handling error disini
+                // Handle error here
             }
         }
     }
@@ -79,7 +73,7 @@ class SearchFragment : Fragment() {
     private fun setSearchBar() {
         binding.svAccounts.addTextChangedListener(onTextChanged = { query, _, _, _ ->
             if (query.isNullOrEmpty()) {
-                viewModel.searchedIngredients.postValue(FakeData.generateIngredients())
+                viewModel.loadInitialIngredients()
             } else {
                 viewModel.searchIngredients(query.toString(), isFromSearch ?: false)
             }
@@ -96,8 +90,9 @@ class SearchFragment : Fragment() {
     private fun setListeners() {
         binding.apply {
             searchIngredientsAdapter.onIngredientsClick = { ingredients ->
-                val bundle = Bundle()
-                bundle.putParcelable(IngredientsDetailFragment.EXTRA_INGREDIENTS, ingredients)
+                val bundle = Bundle().apply {
+                    putParcelable(IngredientsDetailFragment.EXTRA_INGREDIENTS, ingredients)
+                }
                 findNavController().navigate(R.id.navigation_detail, bundle)
             }
 
@@ -105,9 +100,13 @@ class SearchFragment : Fragment() {
         }
     }
 
-
     private fun showLoading(isLoading: Boolean) {
         binding.progressbar.isVisible = isLoading
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

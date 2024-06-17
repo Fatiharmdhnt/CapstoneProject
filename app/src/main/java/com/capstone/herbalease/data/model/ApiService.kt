@@ -11,6 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -37,4 +38,13 @@ interface ApiService {
         @Part("name") name: RequestBody,
         @Part("email") email: RequestBody
     ): UploadResponse
+
+    @GET("/allHerbs")
+    suspend fun getAllHerbs(): List<AppResponseItem>
+
+    @GET("/allHerbs")
+    suspend fun searchTanaman(
+        @Query("kategori") kategori: String,
+        @Query("value")value: String
+    ) : List<AppResponseItem>
 }

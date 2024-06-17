@@ -2,13 +2,15 @@ package com.capstone.herbalease.data.pref
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 @Parcelize
+@Entity(tableName = "ingredients")
 data class Ingredients(
-    val id: Int,
-    val name: String,
+    @PrimaryKey val id: Int,
+    val nama: String,
     val imageUrl: String,
     val description: String,
     val listKhasiat: List<String>,
@@ -19,7 +21,7 @@ data class Ingredients(
 
 @Entity(tableName = "favorite")
 data class Ingredien(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val imageUrl: String,
     val description: String,
@@ -28,9 +30,10 @@ data class Ingredien(
     val listKandungan: List<String> = listOf(),
     val listKeluhan: List<String> = listOf(),
 ) : Serializable
+
 @Entity(tableName = "history")
 data class Ingredient(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val imageUrl: String,
     val description: String,

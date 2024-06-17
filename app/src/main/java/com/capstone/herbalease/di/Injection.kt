@@ -53,4 +53,9 @@ object Injection {
         val token = runBlocking { provideUserRepository(context).getSession().first().token }
         return MainRepository(getApiService(token))
     }
+
+    fun provideApiService(context: Context): ApiService {
+        val token = runBlocking { provideUserRepository(context).getSession().first().token }
+        return getApiService(token)
+    }
 }

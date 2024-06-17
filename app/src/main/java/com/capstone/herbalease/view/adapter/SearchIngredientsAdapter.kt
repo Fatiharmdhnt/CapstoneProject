@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.capstone.herbalease.data.model.AppResponseItem
 import com.capstone.herbalease.data.pref.Ingredients
 import com.capstone.herbalease.databinding.ItemIngredientSearchRowBinding
 
 class SearchIngredientsAdapter :
-    ListAdapter<Ingredients, SearchIngredientsAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    var onIngredientsClick: ((Ingredients) -> Unit)? = null
+    ListAdapter<AppResponseItem, SearchIngredientsAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    var onIngredientsClick: ((AppResponseItem) -> Unit)? = null
     var isFromSearch: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
@@ -33,22 +34,22 @@ class SearchIngredientsAdapter :
 
     inner class MyViewHolder(private val binding: ItemIngredientSearchRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(ingredients: Ingredients) {
+        fun bind(ingredient: AppResponseItem) {
             with(binding) {
                 Glide.with(root)
-                    .load(ingredients.imageUrl)
+                    .load(ingredient.imageUrl)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(ivIngredient)
 
-                tvTitle.text = ingredients.name
-                tvDesc.text = ingredients.description
+                tvTitle.text = ingredient.nama
+                tvDesc.text = ingredient.deskripsi
 
                 if (isFromSearch) {
-                    if (ingredients.listKeluhan.isNotEmpty()) {
+                    if (!ingredient.keyword.isNullOrEmpty()) {
                         layoutKeywords.isVisible = true
 
                         val keywordsAdapter = KeywordsAdapter()
-                        keywordsAdapter.submitList(ingredients.listKeluhan)
+                        keywordsAdapter.submitList(ingredient.keyword.split(", "))
 
                         rvKeywords.apply {
                             layoutManager =
@@ -63,24 +64,24 @@ class SearchIngredientsAdapter :
                 }
 
                 root.setOnClickListener {
-                    onIngredientsClick?.invoke(ingredients)
+                    onIngredientsClick?.invoke(ingredient)
                 }
             }
         }
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Ingredients>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AppResponseItem>() {
             override fun areItemsTheSame(
-                oldItem: Ingredients,
-                newItem: Ingredients
+                oldItem: AppResponseItem,
+                newItem: AppResponseItem
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: Ingredients,
-                newItem: Ingredients
+                oldItem: AppResponseItem,
+                newItem: AppResponseItem
             ): Boolean {
                 return oldItem == newItem
             }
