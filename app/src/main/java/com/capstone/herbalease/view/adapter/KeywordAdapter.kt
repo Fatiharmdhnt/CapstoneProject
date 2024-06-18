@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.herbalease.data.model.retrofit.Keyword
+import com.capstone.herbalease.data.model.response.Keyword
 import com.capstone.herbalease.databinding.KeywordItemBinding
 
 class KeywordAdapter : RecyclerView.Adapter<KeywordAdapter.ViewHolder>(){

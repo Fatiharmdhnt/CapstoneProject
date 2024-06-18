@@ -9,26 +9,30 @@ import com.capstone.herbalease.data.pref.Ingredients
 
 @Database(
     entities = [Ingredients::class],
-    version = 1
+    version = 1, // Start from version 1 if you want to reset completely
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class FavoriteDatabase : RoomDatabase() {
+    abstract fun FavoriteDao(): FavoriteDao
 
-    abstract fun FavoriteDao() : FavoriteDao
-
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: FavoriteDatabase? = null
+
         @JvmStatic
         fun getDatabase(context: Context): FavoriteDatabase {
-            if (INSTANCE == null) {
-                synchronized(FavoriteDatabase::class.java) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        FavoriteDatabase::class.java, "note_database")
-                        .build()
-                }
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    FavoriteDatabase::class.java,
+                    "favorite_database"
+                )
+                    .fallbackToDestructiveMigration() // Ensure schema changes are applied
+                    .build()
+                INSTANCE = instance
+                instance
             }
-            return INSTANCE as FavoriteDatabase
         }
     }
 }

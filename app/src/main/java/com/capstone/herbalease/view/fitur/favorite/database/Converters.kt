@@ -1,7 +1,7 @@
 package com.capstone.herbalease.view.fitur.favorite.database
 
 import androidx.room.TypeConverter
-import com.capstone.herbalease.data.model.retrofit.RekomendasiMenu
+import com.capstone.herbalease.data.model.response.RekomendasiMenu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

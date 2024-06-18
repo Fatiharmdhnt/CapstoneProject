@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.capstone.herbalease.R
-import com.capstone.herbalease.data.model.retrofit.AppResponseItem
+import com.capstone.herbalease.data.model.response.AppResponseItem
 import com.capstone.herbalease.databinding.ItemIngredientRowBinding
 import com.capstone.herbalease.databinding.LoadMoreLayoutBinding
 

@@ -2,8 +2,8 @@ package com.capstone.herbalease.data.pref
 
 import androidx.lifecycle.liveData
 import com.capstone.herbalease.data.model.retrofit.ApiService
-import com.capstone.herbalease.data.model.retrofit.LoginRequest
-import com.capstone.herbalease.data.model.retrofit.RegisterRequest
+import com.capstone.herbalease.data.model.response.LoginRequest
+import com.capstone.herbalease.data.model.response.RegisterRequest
 
 import com.capstone.herbalease.di.Result
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

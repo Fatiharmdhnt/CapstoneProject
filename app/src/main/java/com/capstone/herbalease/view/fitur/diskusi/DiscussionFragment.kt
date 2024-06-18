@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.capstone.herbalease.data.model.retrofit.ForumDiscussion
+import com.capstone.herbalease.data.model.response.ForumDiscussion
 import com.capstone.herbalease.databinding.FragmentDiscussionBinding
 import com.capstone.herbalease.view.adapter.DiscussionAdapter
 import com.capstone.herbalease.view.fitur.diskusi.detail.DetailDiscussionActivity

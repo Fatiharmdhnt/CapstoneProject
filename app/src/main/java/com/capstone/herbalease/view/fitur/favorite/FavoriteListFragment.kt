@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
-import com.capstone.herbalease.data.model.retrofit.AppResponseItem
+import com.capstone.herbalease.data.model.response.AppResponseItem
 import com.capstone.herbalease.databinding.FavoriteItemRecyclerviewBinding
 import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.SearchIngredientsAdapter

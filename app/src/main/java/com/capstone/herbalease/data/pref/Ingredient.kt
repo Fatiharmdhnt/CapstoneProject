@@ -4,8 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.capstone.herbalease.data.model.response.RekomendasiMenu
 import java.io.Serializable
-@Entity(tableName = "favorite")
-data class Ingredients(
+
+@Entity(tableName = "history")
+data class Ingredient(
     @PrimaryKey val id: Int,
     val name: String,
     val imageUrl: String,
@@ -15,5 +16,3 @@ data class Ingredients(
     val listKandungan: List<String>,
     val listRekomendasi: List<RekomendasiMenu>
 ) : Serializable
-
-

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs") // Safe Args plugin
@@ -43,7 +44,7 @@ android {
 }
 
 val cameraxVersion = "1.2.3"
-val roomVersion = "2.2.6"
+val roomVersion = "2.5.1"
 
 dependencies {
     // Image Loading
@@ -95,7 +96,7 @@ dependencies {
 
     //Room Database
     implementation ("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor ("androidx.room:room-compiler:$roomVersion")
+    annotationProcessor  ("androidx.room:room-compiler:$roomVersion")
     androidTestImplementation ("androidx.room:room-testing:$roomVersion")
     implementation ("androidx.room:room-ktx:$roomVersion")
     kapt ("androidx.room:room-compiler:$roomVersion")

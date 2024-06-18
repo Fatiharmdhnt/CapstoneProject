@@ -1,4 +1,4 @@
-package com.capstone.herbalease.data.model.retrofit
+package com.capstone.herbalease.data.model.response
 
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable

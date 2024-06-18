@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object Injection {
-    private const val API_URL = "https://capstone-herbalease.uc.r.appspot.com/"
+    private const val API_URL = "https://frontend-dot-capstone-herbalease.uc.r.appspot.com/"
 
     private fun getApiService(token: String): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {

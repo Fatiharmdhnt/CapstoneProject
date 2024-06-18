@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.capstone.herbalease.data.model.retrofit.AppResponseItem
+import com.capstone.herbalease.data.model.response.AppResponseItem
 import com.capstone.herbalease.data.pref.Ingredient
 import com.capstone.herbalease.data.pref.Ingredients
 import com.capstone.herbalease.view.fitur.favorite.database.FavoriteDao

@@ -1,9 +1,18 @@
 package com.capstone.herbalease.view.fitur.favorite.database
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.capstone.herbalease.data.pref.Ingredient
 
+@Database(
+    entities = [Ingredient::class],
+    version = 1,
+    exportSchema = false
+)
+@TypeConverters(Converters::class)
 abstract class HistoryDatabase : RoomDatabase(){
 
     abstract fun HistoryDao() : HistoryDao
@@ -16,7 +25,8 @@ abstract class HistoryDatabase : RoomDatabase(){
             if (INSTANCE == null) {
                 synchronized(HistoryDatabase::class.java) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        HistoryDatabase::class.java, "note_database")
+                        HistoryDatabase::class.java, "history_database")
+                        .fallbackToDestructiveMigration()
                         .build()
                 }
             }
