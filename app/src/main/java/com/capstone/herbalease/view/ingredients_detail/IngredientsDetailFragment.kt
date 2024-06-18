@@ -13,10 +13,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.capstone.herbalease.R
 import com.capstone.herbalease.data.model.AppResponseItem
-import com.capstone.herbalease.data.pref.Ingredients
 import com.capstone.herbalease.databinding.ActivityIngredientsDetailBinding
 import com.capstone.herbalease.view.adapter.BenefitAdapter
 import com.capstone.herbalease.view.adapter.KeywordsAdapter
+import com.capstone.herbalease.view.adapter.MenuRecommendationAdapter
 
 class IngredientsDetailFragment : Fragment() {
     private var _binding: ActivityIngredientsDetailBinding? = null
@@ -59,6 +59,7 @@ class IngredientsDetailFragment : Fragment() {
                 tvNameIngredients.text = it.nama
                 tvDesc.text = it.deskripsi
 
+                // Set Kandungan
                 if (it.listKandungan.isNotEmpty()) {
                     layoutKandugnan.isVisible = true
 
@@ -74,6 +75,7 @@ class IngredientsDetailFragment : Fragment() {
                     layoutKandugnan.isVisible = false
                 }
 
+                // Set Khasiat
                 if (it.listKhasiat.isNotEmpty()) {
                     sectionBenefit.isVisible = true
 
@@ -89,6 +91,7 @@ class IngredientsDetailFragment : Fragment() {
                     sectionBenefit.isVisible = false
                 }
 
+                // Set Keluhan
                 if (it.listKeluhan.isNotEmpty()) {
                     layoutKeluhan.isVisible = true
 
@@ -101,10 +104,26 @@ class IngredientsDetailFragment : Fragment() {
                         adapter = keluhanAdapter
                     }
                 } else {
-                    layoutKeluhan.isVisible = true
+                    layoutKeluhan.isVisible = false
+                }
+
+                // Set Recommended Menu
+                if (it.rekomendasiMenu?.isNotEmpty() == true) {
+                    sectionRecommendMenu.isVisible = true
+
+                    val menuAdapter = MenuRecommendationAdapter()
+                    menuAdapter.submitList(it.rekomendasiMenu)
+
+                    rvMenuRecommendatiom.apply {
+                        layoutManager =
+                            LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
+                        adapter = menuAdapter
+                    }
+                } else {
+                    sectionRecommendMenu.isVisible = false
                 }
             } ?: run {
-                // Handling ketika gagal memuat Bahan
+                // Handle the case when ingredients are null
             }
         }
     }
@@ -115,20 +134,21 @@ class IngredientsDetailFragment : Fragment() {
 
             btnFav.setOnClickListener {
                 isFavorited = !isFavorited
-                if (isFavorited)
+                if (isFavorited) {
                     btnFav.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),
                             R.drawable.ic_fav_fill
                         )
                     )
-                else
+                } else {
                     btnFav.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),
                             R.drawable.ic_fav
                         )
                     )
+                }
             }
         }
     }

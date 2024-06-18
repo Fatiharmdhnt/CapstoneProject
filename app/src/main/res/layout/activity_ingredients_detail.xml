@@ -151,6 +151,14 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_menu_recommendatiom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/item_menu_recommendation" />
+
             </LinearLayout>
 
             <LinearLayout

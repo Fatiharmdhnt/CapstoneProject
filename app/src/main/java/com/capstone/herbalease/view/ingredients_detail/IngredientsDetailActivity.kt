@@ -12,6 +12,7 @@ import com.capstone.herbalease.data.model.AppResponseItem
 import com.capstone.herbalease.databinding.ActivityIngredientsDetailBinding
 import com.capstone.herbalease.view.adapter.BenefitAdapter
 import com.capstone.herbalease.view.adapter.KeywordsAdapter
+import com.capstone.herbalease.view.adapter.MenuRecommendationAdapter
 
 class IngredientsDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIngredientsDetailBinding
@@ -48,6 +49,7 @@ class IngredientsDetailActivity : AppCompatActivity() {
                 tvNameIngredients.text = it.nama
                 tvDesc.text = it.deskripsi
 
+                // Set Kandungan
                 it.kandungan?.let { kandungan ->
                     if (kandungan.isNotEmpty()) {
                         layoutKandugnan.isVisible = true
@@ -65,6 +67,7 @@ class IngredientsDetailActivity : AppCompatActivity() {
                     }
                 }
 
+                // Set Khasiat
                 it.khasiat?.let { khasiat ->
                     if (khasiat.isNotEmpty()) {
                         sectionBenefit.isVisible = true
@@ -82,6 +85,7 @@ class IngredientsDetailActivity : AppCompatActivity() {
                     }
                 }
 
+                // Set Keluhan
                 it.keyword?.let { keyword ->
                     if (keyword.isNotEmpty()) {
                         layoutKeluhan.isVisible = true
@@ -99,6 +103,23 @@ class IngredientsDetailActivity : AppCompatActivity() {
                     }
                 }
 
+                // Set Recommended Menu
+                it.rekomendasiMenu?.let { menuList ->
+                    if (menuList.isNotEmpty()) {
+                        sectionRecommendMenu.isVisible = true
+
+                        val menuAdapter = MenuRecommendationAdapter()
+                        menuAdapter.submitList(menuList)
+
+                        rvMenuRecommendatiom.apply {
+                            layoutManager =
+                                LinearLayoutManager(this@IngredientsDetailActivity, LinearLayoutManager.HORIZONTAL, false)
+                            adapter = menuAdapter
+                        }
+                    } else {
+                        sectionRecommendMenu.isVisible = false
+                    }
+                }
             } ?: run {
                 // Handle the case when ingredient is null
             }
