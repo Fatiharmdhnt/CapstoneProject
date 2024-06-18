@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.capstone.herbalease.data.model.AppResponseItem
+import com.capstone.herbalease.data.model.retrofit.AppResponseItem
 import com.capstone.herbalease.data.pref.AppRepository
-import com.capstone.herbalease.data.pref.Ingredients
 import com.capstone.herbalease.data.pref.MainRepository
 import com.capstone.herbalease.di.Result
 
@@ -17,8 +16,8 @@ class HomeViewModel(private val repository: AppRepository, private val mainRepos
     private val _isLoadingIngredients = MutableLiveData(false)
     val isLoadingIngredients: LiveData<Boolean> = _isLoadingIngredients
 
-    private val _ingredientList = MutableLiveData<List<AppResponseItem>>(listOf())
-    val ingredientList: LiveData<List<AppResponseItem>> = _ingredientList
+    private val _ingredientList = MutableLiveData<List<AppResponseItem>?>(listOf())
+    val ingredientList: MutableLiveData<List<AppResponseItem>?> = _ingredientList
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage

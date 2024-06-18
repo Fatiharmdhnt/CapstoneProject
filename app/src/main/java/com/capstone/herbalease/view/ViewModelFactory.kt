@@ -1,5 +1,6 @@
 package com.capstone.herbalease.view
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,6 +8,7 @@ import com.capstone.herbalease.data.pref.AppRepository
 import com.capstone.herbalease.data.pref.MainRepository
 import com.capstone.herbalease.data.pref.UserRepository
 import com.capstone.herbalease.di.Injection
+import com.capstone.herbalease.view.fitur.favorite.FavoriteHistoryViewModel
 import com.capstone.herbalease.view.fitur.home.HomeViewModel
 import com.capstone.herbalease.view.fitur.profile.ProfileViewModel
 import com.capstone.herbalease.view.login.LoginViewModel
@@ -15,7 +17,7 @@ import com.capstone.herbalease.view.signup.SignupViewModel
 import com.capstone.herbalease.view.welcome.WelcomeViewModel
 
 
-class ViewModelFactory(context: Context) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInstanceFactory() {
 
     private val userRepository: UserRepository = Injection.provideUserRepository(context)
     private val mainRepository: MainRepository = Injection.provideMainRepository(context)
@@ -49,6 +51,10 @@ class ViewModelFactory(context: Context) : ViewModelProvider.NewInstanceFactory(
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> {
                 val appRepository = AppRepository(apiService)
                 SearchViewModel(appRepository) as T
+            }
+
+            modelClass.isAssignableFrom(FavoriteHistoryViewModel::class.java) -> {
+                FavoriteHistoryViewModel(context.applicationContext as Application) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

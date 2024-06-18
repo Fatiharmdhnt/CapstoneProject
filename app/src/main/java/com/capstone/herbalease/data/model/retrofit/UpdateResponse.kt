@@ -1,4 +1,4 @@
-package com.capstone.herbalease.data.model
+package com.capstone.herbalease.data.model.retrofit
 
 data class UploadResponse(
     val message: String,

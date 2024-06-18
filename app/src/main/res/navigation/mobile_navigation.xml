@@ -55,7 +55,7 @@
         tools:layout="@layout/fragment_edit_profile" >
         <argument
             android:name="profileData"
-            app:argType="com.capstone.herbalease.data.model.ProfileResponse" />
+            app:argType="com.capstone.herbalease.data.model.retrofit.ProfileResponse" />
         <action
             android:id="@+id/action_editProfileFragment_to_navigation_profile"
             app:destination="@id/navigation_profile"

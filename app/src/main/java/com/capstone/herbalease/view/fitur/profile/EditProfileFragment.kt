@@ -22,7 +22,7 @@ import com.capstone.herbalease.databinding.FragmentEditProfileBinding
 import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.customview.LoadingDialog
 import com.capstone.herbalease.di.Result
-import com.capstone.herbalease.data.model.ProfileResponse
+import com.capstone.herbalease.data.model.retrofit.ProfileResponse
 import com.github.dhaval2404.imagepicker.ImagePicker
 
 import java.io.File

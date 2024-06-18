@@ -10,17 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
+import com.capstone.herbalease.data.model.retrofit.AppResponseItem
 import com.capstone.herbalease.data.pref.Ingredients
 import com.capstone.herbalease.databinding.FavoriteItemRecyclerviewBinding
+import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.SearchIngredientsAdapter
 import com.capstone.herbalease.view.ingredients_detail.IngredientsDetailFragment
 
 class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview){
     private var _binding : FavoriteItemRecyclerviewBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var viewModel:
     private lateinit var adapter: SearchIngredientsAdapter
-    private lateinit var listHistory : List<Ingredients>
+    private var listHistory : List<AppResponseItem>? = null
     private lateinit var viewModel: FavoriteHistoryViewModel
 
     override fun onCreateView(
@@ -30,7 +31,7 @@ class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview){
     ): View? {
         _binding = FavoriteItemRecyclerviewBinding.inflate(inflater, container,false)
         adapter = SearchIngredientsAdapter()
-        viewModel = ViewModelProvider(this).get(FavoriteHistoryViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelFactory(requireContext())).get(FavoriteHistoryViewModel::class.java)
         setListeners()
         return binding.root
     }
@@ -38,20 +39,7 @@ class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview){
         super.onViewCreated(view, savedInstanceState)
         var listIngredient : MutableList<Ingredients>? = null
         viewModel.listHistory.observe(viewLifecycleOwner, Observer { it ->
-            it.forEach {
-                val ingredients = Ingredients(
-                    it.id,
-                    it.name,
-                    it.imageUrl,
-                    it.description,
-                    it.listKhasiat,
-                    it.listKeywords,
-                    it.listKandungan,
-                    it.listKeluhan
-                )
-                listIngredient?.add(ingredients)
-            }
-            listHistory = listIngredient!!
+            listHistory = it
         })
 
         adapter.submitList(listHistory)
@@ -63,9 +51,9 @@ class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview){
 
     private fun setListeners() {
         binding.apply {
-            adapter.onIngredientsClick = { ingredients ->
+            adapter.onIngredientsClick = {
                 val bundle = Bundle()
-                bundle.putParcelable(IngredientsDetailFragment.EXTRA_INGREDIENTS, ingredients)
+                bundle.putParcelable(IngredientsDetailFragment.EXTRA_INGREDIENTS, it)
                 findNavController().navigate(R.id.navigation_detail, bundle)
             }
         }

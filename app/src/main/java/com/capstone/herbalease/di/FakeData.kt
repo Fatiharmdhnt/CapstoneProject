@@ -1,9 +1,8 @@
 package com.capstone.herbalease.di
 
-import com.capstone.herbalease.data.model.Comments
-import com.capstone.herbalease.data.model.ForumDiscussion
-import com.capstone.herbalease.data.model.Keyword
-import com.capstone.herbalease.data.pref.Ingredients
+import com.capstone.herbalease.data.model.retrofit.Comments
+import com.capstone.herbalease.data.model.retrofit.ForumDiscussion
+import com.capstone.herbalease.data.model.retrofit.Keyword
 
 object FakeData {
 //    fun generateHeadlineIngredients() = ingredientList.take(10)

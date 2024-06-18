@@ -6,12 +6,11 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.capstone.herbalease.data.model.ForumDiscussion
+import com.capstone.herbalease.data.model.retrofit.ForumDiscussion
 import com.capstone.herbalease.databinding.ActivityDetailDiscussionBinding
 import com.capstone.herbalease.di.FakeData
 import com.capstone.herbalease.view.adapter.CommentAdapter
 import com.capstone.herbalease.view.adapter.KeywordAdapter
-import com.capstone.herbalease.view.fitur.diskusi.DiscussionViewModel
 
 class DetailDiscussionActivity : AppCompatActivity() {
 

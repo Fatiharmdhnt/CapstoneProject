@@ -15,7 +15,7 @@ import com.capstone.herbalease.R
 import com.capstone.herbalease.databinding.ActivityLoginBinding
 import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.signup.SignupActivity
-import com.capstone.herbalease.data.model.LoginRequest
+import com.capstone.herbalease.data.model.retrofit.LoginRequest
 import com.capstone.herbalease.data.pref.UserModel
 import com.capstone.herbalease.di.Result
 import com.capstone.herbalease.view.MainActivity

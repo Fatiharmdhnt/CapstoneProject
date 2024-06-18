@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.capstone.herbalease.data.model.AppResponseItem
+import com.capstone.herbalease.data.model.retrofit.AppResponseItem
 import com.capstone.herbalease.data.pref.AppRepository
-import com.capstone.herbalease.di.FakeData
 import com.capstone.herbalease.di.Result
 
 

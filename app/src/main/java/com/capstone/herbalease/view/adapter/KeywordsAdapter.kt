@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.herbalease.data.model.Keyword
+import com.capstone.herbalease.data.model.retrofit.Keyword
 import com.capstone.herbalease.databinding.ItemKeywordLayoutBinding
 
 

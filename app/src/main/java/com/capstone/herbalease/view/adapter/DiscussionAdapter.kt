@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.capstone.herbalease.data.model.ForumDiscussion
+import com.capstone.herbalease.data.model.retrofit.ForumDiscussion
 import com.capstone.herbalease.databinding.FragmentItemBinding
 
 class DiscussionAdapter : RecyclerView.Adapter<DiscussionAdapter.ViewHolder>() {

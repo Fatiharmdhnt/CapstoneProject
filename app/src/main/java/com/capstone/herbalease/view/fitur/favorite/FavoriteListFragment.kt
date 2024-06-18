@@ -10,17 +10,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
-import com.capstone.herbalease.data.pref.Ingredients
+import com.capstone.herbalease.data.model.retrofit.AppResponseItem
 import com.capstone.herbalease.databinding.FavoriteItemRecyclerviewBinding
+import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.SearchIngredientsAdapter
 import com.capstone.herbalease.view.ingredients_detail.IngredientsDetailFragment
 
 class FavoriteListFragment : Fragment(R.layout.favorite_item_recyclerview){
     private var _binding : FavoriteItemRecyclerviewBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var viewModel:
     private lateinit var adapter: SearchIngredientsAdapter
-    private lateinit var listFavorite : List<Ingredients>
+    private var listFavorite : List<AppResponseItem>? = null
     private lateinit var viewModel: FavoriteHistoryViewModel
 
     override fun onCreateView(
@@ -30,7 +30,7 @@ class FavoriteListFragment : Fragment(R.layout.favorite_item_recyclerview){
     ): View? {
         _binding = FavoriteItemRecyclerviewBinding.inflate(inflater, container,false)
         adapter = SearchIngredientsAdapter()
-        viewModel = ViewModelProvider(this).get(FavoriteHistoryViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelFactory(requireContext())).get(FavoriteHistoryViewModel::class.java)
         setListeners()
         return binding.root
     }
@@ -49,9 +49,9 @@ class FavoriteListFragment : Fragment(R.layout.favorite_item_recyclerview){
 
     private fun setListeners() {
         binding.apply {
-            adapter.onIngredientsClick = { ingredients ->
+            adapter.onIngredientsClick = {
                 val bundle = Bundle()
-                bundle.putParcelable(IngredientsDetailFragment.EXTRA_INGREDIENTS, ingredients)
+                bundle.putParcelable(IngredientsDetailFragment.EXTRA_INGREDIENTS, it)
                 findNavController().navigate(R.id.navigation_detail, bundle)
             }
         }

@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.capstone.herbalease.data.model.AppResponseItem
-import com.capstone.herbalease.data.pref.Ingredients
+import com.capstone.herbalease.data.model.retrofit.AppResponseItem
 import com.capstone.herbalease.databinding.ItemIngredientSearchRowBinding
 
 class SearchIngredientsAdapter :
@@ -49,7 +48,7 @@ class SearchIngredientsAdapter :
                         layoutKeywords.isVisible = true
 
                         val keywordsAdapter = KeywordsAdapter()
-                        keywordsAdapter.submitList(ingredient.keyword.split(", "))
+                        keywordsAdapter.submitList(ingredient.keyword!!.split(", "))
 
                         rvKeywords.apply {
                             layoutManager =

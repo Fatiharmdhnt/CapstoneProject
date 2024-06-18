@@ -1,7 +1,6 @@
 package com.capstone.herbalease.view.signup
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.capstone.herbalease.R
-import com.capstone.herbalease.data.model.RegisterRequest
+import com.capstone.herbalease.data.model.retrofit.RegisterRequest
 import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.login.LoginActivity
 import com.capstone.herbalease.di.Result

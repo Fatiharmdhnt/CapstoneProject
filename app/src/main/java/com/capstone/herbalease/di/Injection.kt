@@ -1,7 +1,7 @@
 package com.capstone.herbalease.di
 
 import android.content.Context
-import com.capstone.herbalease.data.model.ApiService
+import com.capstone.herbalease.data.model.retrofit.ApiService
 import com.capstone.herbalease.data.pref.MainRepository
 import com.capstone.herbalease.data.pref.UserPreference
 import com.capstone.herbalease.data.pref.UserRepository

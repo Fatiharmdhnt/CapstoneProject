@@ -85,7 +85,9 @@ class HomeFragment : Fragment() {
 
             ingredientList.observe(viewLifecycleOwner) {
                 // Handling list headline bahan
-                headlineIngredientsAdapter.setData(it.toMutableList())
+                if (it != null) {
+                    headlineIngredientsAdapter.setData(it.toMutableList())
+                }
             }
 
             errorMessage.observe(viewLifecycleOwner) {
