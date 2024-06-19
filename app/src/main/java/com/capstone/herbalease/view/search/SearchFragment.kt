@@ -1,6 +1,7 @@
 package com.capstone.herbalease.view.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
 import com.capstone.herbalease.databinding.ActivitySearchBinding
-import com.capstone.herbalease.di.FakeData
 import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.SearchIngredientsAdapter
 import com.capstone.herbalease.view.ingredients_detail.IngredientsDetailFragment
@@ -60,6 +60,7 @@ class SearchFragment : Fragment() {
             }
 
             searchedIngredients.observe(viewLifecycleOwner) {
+                Log.d("searchFragment", "searched ${it}")
                 searchIngredientsAdapter.submitList(it)
                 binding.emptyView.isVisible = it.isEmpty()
             }
