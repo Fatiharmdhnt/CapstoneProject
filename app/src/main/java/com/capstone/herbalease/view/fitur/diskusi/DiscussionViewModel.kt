@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.capstone.herbalease.data.model.Comments
-import com.capstone.herbalease.data.model.ForumDiscussion
-import com.capstone.herbalease.data.model.Keyword
-import com.capstone.herbalease.data.model.response.discussion.GetDiscussionResponse
+import com.capstone.herbalease.data.pref.Comments
+import com.capstone.herbalease.data.pref.ForumDiscussion
+import com.capstone.herbalease.data.pref.Keyword
+import com.capstone.herbalease.data.model.response.discussion.GetDiscussionResponseItem
 import com.capstone.herbalease.data.pref.AppRepository
 import com.capstone.herbalease.data.pref.UserModel
 import com.capstone.herbalease.data.pref.UserRepository
@@ -27,8 +27,8 @@ class DiscussionViewModel(private val repository: UserRepository, private val ap
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
-    init {
-        // Load the initial session from the repository
+
+    fun getSession(){
         viewModelScope.launch {
             repository.getSession().collect { session ->
                 _userSession.postValue(session)
@@ -36,6 +36,8 @@ class DiscussionViewModel(private val repository: UserRepository, private val ap
         }
     }
     fun setDiscussion() {
+        val id = _userSession.value!!.id
+        println( _userSession.value!!.id)
         viewModelScope.launch {
             val response = appRepository.getDiscussion(_userSession.value!!.id)
 
@@ -72,31 +74,38 @@ class DiscussionViewModel(private val repository: UserRepository, private val ap
         }
     }
 
-    fun dicussionResponseToForumDiscussion(response : List<GetDiscussionResponse>): MutableList<ForumDiscussion>? {
-        var result : MutableList<ForumDiscussion>? = null
-        response.forEach {
-            val discuss : ForumDiscussion? = null
-            discuss?.name = it.name.toString()
-            discuss?.title = it.title.toString()
-            discuss?.photoProfileUrl = it.photoProfileUrl.toString()
-            discuss?.description = it.description.toString()
-            discuss?.photoDiscussionUrl = it.photoDiscussionUrl.toString()
+    fun dicussionResponseToForumDiscussion(response: List<GetDiscussionResponseItem>): MutableList<ForumDiscussion> {
+        val result: MutableList<ForumDiscussion> = mutableListOf()
+        response.forEach { item ->
+            val discuss = ForumDiscussion(
+                id = item.id ?: 0, // Provide a default value or handle the null case
+                name = item.name.toString(),
+                title = item.title.toString(),
+                photoProfileUrl = item.photoProfileUrl.toString(),
+                description = item.description.toString(),
+                photoDiscussionUrl = item.photoDiscussionUrl.toString(),
+                keyword = mutableListOf(),
+                comments = mutableListOf()
+            )
 
-            //Keyword
-            val keyword = it.keyword.toString().split(", ")
-            val listKeyword : MutableList<Keyword>? = null
-            keyword.forEach {
-                listKeyword?.add(Keyword(it))
+            // Keyword
+            val keyword = item.keyword.toString().split(", ")
+            val listKeyword: MutableList<Keyword> = mutableListOf()
+            keyword.forEach { k ->
+                listKeyword.add(Keyword(k))
             }
-            if (listKeyword != null) {
-                discuss?.keyword = listKeyword
+            discuss.keyword = listKeyword
+
+            // Comments
+            val commentItem: MutableList<Comments> = mutableListOf()
+            item.comments?.forEach { c ->
+                commentItem.add(Comments(c?.namekomen.toString(), c?.photoProfileUrlkomen.toString(), c?.comment.toString()))
             }
-            val commentItem : MutableList<Comments>? = null
-            it.comments?.forEach {it ->
-                commentItem?.add(Comments(it?.namekomen.toString(), it?.photoProfileUrlkomen.toString(), it?.comment.toString()))
-            }
-            discuss?.comments = commentItem
+            discuss.comments = commentItem
+
+            result.add(discuss)
         }
         return result
     }
+
 }

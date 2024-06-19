@@ -8,23 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.capstone.herbalease.data.model.ForumDiscussion
+import com.capstone.herbalease.data.pref.ForumDiscussion
 import com.capstone.herbalease.databinding.FragmentDiscussionBinding
+import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.DiscussionAdapter
 import com.capstone.herbalease.view.fitur.diskusi.detail.DetailDiscussionActivity
 import com.capstone.herbalease.view.fitur.diskusi.post.AddDicussionActivity
 
 class DiscussionFragment : Fragment() {
     private lateinit var binding: FragmentDiscussionBinding
-    private lateinit var viewModel: DiscussionViewModel
+    private  val viewModel by viewModels<DiscussionViewModel> {
+        ViewModelFactory(requireContext())
+    }
     private lateinit var adapter: DiscussionAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DiscussionViewModel::class.java)
         adapter = DiscussionAdapter()
     }
 
@@ -96,7 +98,12 @@ class DiscussionFragment : Fragment() {
     }
 
     private fun setListDiscussion(){
-        viewModel.setDiscussion()
+        viewModel.getSession()
+        viewModel.userSession.observe(requireActivity(), Observer {user ->
+            if (user != null){
+                viewModel.setDiscussion()
+            }
+        })
 
         adapter.setOnItemClickCallback(object : DiscussionAdapter.OnItemClickListener{
             override fun onItemClick(data: ForumDiscussion) {

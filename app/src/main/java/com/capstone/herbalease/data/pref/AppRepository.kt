@@ -76,4 +76,18 @@ class AppRepository(
             emit(Result.Error(e.message.toString()))
         }
     }
+
+    fun postComment(
+        id : Int,
+        idDiscussion : Int,
+        comment : String
+    ) = liveData{
+        emit(Result.Loading)
+        try {
+            val postDiscussionResponse = apiService.postComment(id, idDiscussion, comment)
+            emit(Result.Success(postDiscussionResponse))
+        } catch (e : Exception){
+            emit(Result.Error(e.message.toString()))
+        }
+    }
 }

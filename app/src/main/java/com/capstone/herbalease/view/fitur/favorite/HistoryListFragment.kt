@@ -38,7 +38,7 @@ class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var listIngredient : MutableList<Ingredients>? = null
-        viewModel.listHistory.observe(viewLifecycleOwner, Observer { it ->
+        viewModel.listHistory.observe(viewLifecycleOwner, Observer {
             listHistory = it
         })
 

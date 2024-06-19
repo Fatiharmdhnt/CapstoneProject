@@ -152,15 +152,18 @@
                         android:src="@drawable/plus"
                         android:scaleType="fitCenter"
                         android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"/>
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/add_keyword" />
 
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/keyword"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>

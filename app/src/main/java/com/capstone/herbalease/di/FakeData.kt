@@ -1,8 +1,8 @@
 package com.capstone.herbalease.di
 
-import com.capstone.herbalease.data.model.Comments
-import com.capstone.herbalease.data.model.ForumDiscussion
-import com.capstone.herbalease.data.model.Keyword
+import com.capstone.herbalease.data.pref.Comments
+import com.capstone.herbalease.data.pref.ForumDiscussion
+import com.capstone.herbalease.data.pref.Keyword
 
 object FakeData {
 //    fun generateHeadlineIngredients() = ingredientList.take(10)
@@ -256,24 +256,24 @@ object FakeData {
         )
     )
     val komen : MutableList<Comments> = commentList.toMutableList()
-    var discussionList : List<ForumDiscussion> = listOf(
-        ForumDiscussion(
-            "Ben",
-            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            "Bunglon berubah warna",
-            "Bunglon bisa berubah warna dan merayap",
-            keywordList,
-            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            komen
-        ),
-        ForumDiscussion(
-            "Benyud",
-            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            "Masa Kaya begitu, Rugi Dong",
-            "Gua pesan Go-Food tapi ngga sambelnya, yang bener aje, rugi dong",
-            keywordList,
-            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            komen
-        )
-    )
+//    var discussionList : List<ForumDiscussion> = listOf(
+//        ForumDiscussion(
+//            "Ben",
+//            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+//            "Bunglon berubah warna",
+//            "Bunglon bisa berubah warna dan merayap",
+//            keywordList,
+//            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+//            komen
+//        ),
+//        ForumDiscussion(
+//            "Benyud",
+//            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+//            "Masa Kaya begitu, Rugi Dong",
+//            "Gua pesan Go-Food tapi ngga sambelnya, yang bener aje, rugi dong",
+//            keywordList,
+//            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+//            komen
+//        )
+//    )
 }

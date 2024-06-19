@@ -3,20 +3,27 @@ package com.capstone.herbalease.view.fitur.diskusi.post
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
-import com.capstone.herbalease.data.model.ForumDiscussion
-import com.capstone.herbalease.data.model.Keyword
+import com.capstone.herbalease.data.pref.ForumDiscussion
+import com.capstone.herbalease.data.pref.Keyword
 import com.capstone.herbalease.databinding.ActivityAddDicussionBinding
 import com.capstone.herbalease.di.FakeData
+import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.KeywordAdapter
 
 class AddDicussionActivity : AppCompatActivity() {
@@ -24,8 +31,22 @@ class AddDicussionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddDicussionBinding
     private val keywords = mutableListOf<Keyword>()
     private lateinit var adapter: KeywordAdapter
-    private lateinit var uploadedImageView: ImageView
-    private var discussionList = mutableListOf<ForumDiscussion>()
+    private var uploadedImageView: ImageView? = null
+    private var imageUri : Uri? = null
+    private val launcherGallery = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            imageUri = uri
+            showImage()
+        } else {
+            Log.d("Photo Picker", "No media selected")
+        }
+    }
+    private val viewModel by viewModels<AddDiscussionViewModel> {
+        ViewModelFactory(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddDicussionBinding.inflate(layoutInflater)
@@ -48,9 +69,6 @@ class AddDicussionActivity : AppCompatActivity() {
         binding.uploadPhotoFrame.setOnClickListener{
             openGalleryForImage()
         }
-
-        //Getting list from fake data (erase soon)
-        discussionList = FakeData.discussionList.toMutableList()
 
         if (binding.judul != null){
             if (binding.deskripsi != null){
@@ -83,43 +101,46 @@ class AddDicussionActivity : AppCompatActivity() {
     }
 
     private fun openGalleryForImage() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            val selectedImageUri = data.data
-            uploadedImageView.setImageURI(selectedImageUri)
-            uploadedImageView.visibility = ImageView.VISIBLE
-            binding.uploadText.visibility = TextView.GONE
-        }
+    private fun showImage(){
+        val imageBitmap = imageUri?.let { viewModel.resizeAndCompressImage(it, contentResolver, 1080, 1080,1_000_000) }
+        binding.uploadedImage.setImageBitmap(imageBitmap)
+        binding.uploadedImage.visibility = ImageView.VISIBLE
+        binding.uploadText.visibility = TextView.GONE
     }
 
     private fun postDiscussion(){
-        val newDiscussion = ForumDiscussion(
-            "benyud",
-            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            binding.judul.text.toString(),
-            binding.deskripsi.text.toString(),
-            keywords,
-            "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            null
-        )
-        discussionList.add(newDiscussion)
-        FakeData.discussionList = discussionList
-        makeToast("Berhasil menambah dikusi")
+        viewModel.getSession()
+        viewModel.userSession.observe(this, Observer {
+            imageUri?.let {
+                viewModel.postDiscussion(
+                    binding.judul.text.toString(),
+                    it,
+                    binding.deskripsi.text.toString(),
+                    keywords,
+                    this)
+            }
+        })
 
-        setResult(Activity.RESULT_OK)
-        finish()
+        viewModel.isLoading.observe(this, Observer {
+            viewModel.errorMessage.observe(this, Observer {
+                if (it == null || it == ""){
+                    makeToast("Berhasil menambah dikusi")
+
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                } else {
+                    makeToast(it.toString())
+                }
+            })
+
+        })
+
     }
 
     private fun makeToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        private const val PICK_IMAGE_REQUEST = 1
     }
 }

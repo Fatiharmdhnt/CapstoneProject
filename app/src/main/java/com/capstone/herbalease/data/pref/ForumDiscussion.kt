@@ -1,10 +1,11 @@
-package com.capstone.herbalease.data.model
+package com.capstone.herbalease.data.pref
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ForumDiscussion(
+    var id : Int,
     var name: String,
     var photoProfileUrl: String,
     var title: String,

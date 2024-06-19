@@ -62,18 +62,18 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-//        viewModel.userSession.observe(this, Observer { user ->
-//            if (user != null && user.isLogin) {
-//
-//            }else{
-//                val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                startActivity(intent)
-//                finish()
-//            }
-//        })
+        viewModel.userSession.observe(this, Observer { user ->
+            if (user != null && user.isLogin) {
+
+            }else{
+                val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
+        })
 
         viewModel.getSession()
 

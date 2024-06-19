@@ -1,7 +1,5 @@
 package com.capstone.herbalease.view.adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -11,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.capstone.herbalease.data.model.AppResponseItem
+import com.capstone.herbalease.data.model.response.AppResponseItem
 import com.capstone.herbalease.databinding.ItemIngredientSearchRowBinding
 
 class SearchIngredientsAdapter() :

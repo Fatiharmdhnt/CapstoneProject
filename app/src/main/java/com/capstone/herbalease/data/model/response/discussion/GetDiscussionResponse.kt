@@ -1,11 +1,14 @@
 package com.capstone.herbalease.data.model.response.discussion
 
-import kotlinx.parcelize.Parcelize
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-@Parcelize
 data class GetDiscussionResponse(
+
+	@field:SerializedName("GetDiscussionResponse")
+	val getDiscussionResponse: List<GetDiscussionResponseItem?>? = null
+)
+
+data class GetDiscussionResponseItem(
 
 	@field:SerializedName("photoProfileUrl")
 	val photoProfileUrl: String? = null,
@@ -30,9 +33,8 @@ data class GetDiscussionResponse(
 
 	@field:SerializedName("keyword")
 	val keyword: String? = null
-) : Parcelable
+)
 
-@Parcelize
 data class CommentsItem(
 
 	@field:SerializedName("namekomen")
@@ -42,5 +44,8 @@ data class CommentsItem(
 	val comment: String? = null,
 
 	@field:SerializedName("photoProfileUrlkomen")
-	val photoProfileUrlkomen: String? = null
-) : Parcelable
+	val photoProfileUrlkomen: String? = null,
+
+	@field:SerializedName("id")
+	val id: Int? = null
+)

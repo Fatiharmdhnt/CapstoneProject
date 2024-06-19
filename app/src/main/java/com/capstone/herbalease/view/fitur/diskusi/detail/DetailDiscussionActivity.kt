@@ -3,12 +3,13 @@ package com.capstone.herbalease.view.fitur.diskusi.detail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.capstone.herbalease.data.model.ForumDiscussion
+import com.capstone.herbalease.data.pref.ForumDiscussion
 import com.capstone.herbalease.databinding.ActivityDetailDiscussionBinding
-import com.capstone.herbalease.di.FakeData
+import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.CommentAdapter
 import com.capstone.herbalease.view.adapter.KeywordAdapter
 
@@ -18,16 +19,16 @@ class DetailDiscussionActivity : AppCompatActivity() {
     private lateinit var binding : ActivityDetailDiscussionBinding
     private lateinit var adapterKeyword : KeywordAdapter
     private lateinit var adapterComment : CommentAdapter
-    private lateinit var viewModel: DetailDiscussionViewModel
+    private val viewModel by viewModels<DetailDiscussionViewModel> {
+        ViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailDiscussionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this).get(DetailDiscussionViewModel::class.java)
-
-        dataDiscussion = intent.getParcelableExtra<ForumDiscussion>(EXTRA_DISCUSSION)!!
+        dataDiscussion = intent.getParcelableExtra(EXTRA_DISCUSSION)!!
         adapterKeyword = KeywordAdapter()
         adapterComment = CommentAdapter()
         adapterKeyword.setListKeyword(dataDiscussion.keyword)
@@ -67,13 +68,16 @@ class DetailDiscussionActivity : AppCompatActivity() {
 
     private fun postComment(){
         if (binding.editTextComment.text != null){
-            viewModel.sendComment(binding.editTextComment.text.toString(), dataDiscussion.title)
-            binding.editTextComment.text!!.clear()
-            FakeData.discussionList.forEach {
-                if (it.title == dataDiscussion.title){
-                    it.comments?.let { it1 -> adapterComment.setComment(it1) }
-                }
-            }
+            viewModel.getSession()
+            viewModel.userSession.observe(this, Observer {
+                viewModel.sendComment(binding.editTextComment.text.toString(), dataDiscussion)
+                binding.editTextComment.text!!.clear()
+                viewModel.listComment.observe(this, Observer {
+                    if (it != null) {
+                        adapterComment.setComment(it)
+                    }
+                })
+            })
         } else {
             makeToast("Tolong Isi Komentar Anda Terlebih Dahulu")
         }

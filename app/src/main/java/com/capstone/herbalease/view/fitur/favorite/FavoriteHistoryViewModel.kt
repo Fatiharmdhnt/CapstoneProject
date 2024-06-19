@@ -63,29 +63,30 @@ class FavoriteHistoryViewModel(app : Application) : AndroidViewModel(app) {
         }
     }
 
-    private fun listToAppResponse(ingredients: Ingredients) : AppResponseItem? {
-        var result : AppResponseItem? = null
-        result?.id = ingredients.id
-        result?.nama = ingredients.name
-        result?.imageUrl = ingredients.imageUrl
-        result?.deskripsi = ingredients.description
-        result?.khasiat = ingredients.listKhasiat.joinToString(", ")
-        result?.keyword = ingredients.listKeywords.joinToString(", ")
-        result?.kandungan = ingredients.listKandungan.joinToString(", ")
-        result?.rekomendasiMenu = ingredients.listRekomendasi
-        return result
+    private fun listToAppResponse(ingredients: Ingredients): AppResponseItem? {
+        return AppResponseItem(
+            id = ingredients.id,
+            nama = ingredients.name,
+            imageUrl = ingredients.imageUrl,
+            deskripsi = ingredients.description,
+            khasiat = ingredients.listKhasiat.joinToString(", "),
+            keyword = ingredients.listKeywords.joinToString(", "),
+            kandungan = ingredients.listKandungan.joinToString(", "),
+            rekomendasiMenu = ingredients.listRekomendasi
+        )
     }
 
-    private fun ingredientToAppResponse(ingredient: Ingredient) : AppResponseItem? {
-        var result : AppResponseItem? = null
-        result?.id = ingredient.id
-        result?.nama = ingredient.name
-        result?.imageUrl = ingredient.imageUrl
-        result?.deskripsi = ingredient.description
-        result?.khasiat = ingredient.listKhasiat.joinToString(", ")
-        result?.keyword = ingredient.listKeywords.joinToString(", ")
-        result?.kandungan = ingredient.listKandungan.joinToString(", ")
-        result?.rekomendasiMenu = ingredient.listRekomendasi
-        return result
+    private fun ingredientToAppResponse(ingredient: Ingredient): AppResponseItem? {
+        return AppResponseItem(
+            id = ingredient.id,
+            nama = ingredient.name,
+            imageUrl = ingredient.imageUrl,
+            deskripsi = ingredient.description,
+            khasiat = ingredient.listKhasiat.joinToString(", "),
+            keyword = ingredient.listKeywords.joinToString(", "),
+            kandungan = ingredient.listKandungan.joinToString(", "),
+            rekomendasiMenu = ingredient.listRekomendasi
+        )
     }
+
 }

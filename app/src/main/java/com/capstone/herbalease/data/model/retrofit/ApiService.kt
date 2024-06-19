@@ -1,6 +1,5 @@
 package com.capstone.herbalease.data.model.retrofit
 
-
 import com.capstone.herbalease.data.model.response.AppResponseItem
 import com.capstone.herbalease.data.model.response.LoginRequest
 import com.capstone.herbalease.data.model.response.LoginResponse
@@ -8,12 +7,11 @@ import com.capstone.herbalease.data.model.response.ProfileResponse
 import com.capstone.herbalease.data.model.response.RegisterRequest
 import com.capstone.herbalease.data.model.response.RegisterResponse
 import com.capstone.herbalease.data.model.response.UploadResponse
-import com.capstone.herbalease.data.model.response.discussion.GetDiscussionResponse
+import com.capstone.herbalease.data.model.response.discussion.GetDiscussionResponseItem
 import com.capstone.herbalease.data.model.response.discussion.PostCommentResponse
 import com.capstone.herbalease.data.model.response.discussion.PostDiscussionResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
@@ -59,12 +57,12 @@ interface ApiService {
     suspend fun searchTanaman(
         @Query("kategori") kategori: String,
         @Query("value")value: String
-    ) : List<com.capstone.herbalease.data.model.AppResponseItem>
+    ) : List<AppResponseItem>
 
     @GET("forum-discussion/{id}")
     fun getDiscussion(
         @Path("id") id : Int
-    ): List<GetDiscussionResponse>
+    ): List<GetDiscussionResponseItem>
 
     @Multipart
     @POST("forum-discussion")

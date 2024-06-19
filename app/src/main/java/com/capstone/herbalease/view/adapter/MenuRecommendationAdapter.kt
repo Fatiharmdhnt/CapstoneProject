@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.capstone.herbalease.data.model.RekomendasiMenu
+import com.capstone.herbalease.data.model.response.RekomendasiMenu
 import com.capstone.herbalease.databinding.ItemMenuRecommendationBinding
 
 class MenuRecommendationAdapter : RecyclerView.Adapter<MenuRecommendationAdapter.MenuViewHolder>() {
