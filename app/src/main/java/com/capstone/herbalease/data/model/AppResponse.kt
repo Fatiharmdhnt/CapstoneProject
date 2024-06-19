@@ -2,8 +2,14 @@ package com.capstone.herbalease.data.model
 
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
-import com.capstone.herbalease.data.model.response.RekomendasiMenu
+import com.google.gson.Gson
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 @Parcelize
 data class AppResponse(
@@ -16,28 +22,30 @@ data class AppResponse(
 data class AppResponseItem(
 
 	@field:SerializedName("khasiat")
-	var khasiat: String? = null,
+	val khasiat: String? = null,
 
 	@field:SerializedName("nama")
-	var nama: String? = null,
+	val nama: String? = null,
 
+	//fix api call
+	@JsonAdapter(RekomendasiMenuAdapter::class)
 	@field:SerializedName("rekomendasi_menu")
-	var rekomendasiMenu: List<RekomendasiMenu?>? = null,
+	val rekomendasiMenu: List<RekomendasiMenu?>? = null,
 
 	@field:SerializedName("image_url")
-	var imageUrl: String? = null,
+	val imageUrl: String? = null,
 
 	@field:SerializedName("id")
-	var id: Int? = null,
+	val id: Int? = null,
 
 	@field:SerializedName("deskripsi")
-	var deskripsi: String? = null,
+	val deskripsi: String? = null,
 
 	@field:SerializedName("keyword")
-	var keyword: String? = null,
+	val keyword: String? = null,
 
 	@field:SerializedName("kandungan")
-	var kandungan: String? = null
+	val kandungan: String? = null
 ) : Parcelable {
 
 	val listKandungan: List<String>
@@ -48,6 +56,31 @@ data class AppResponseItem(
 
 	val listKeluhan: List<String>
 		get() = keyword?.split(", ") ?: emptyList()
+
+	//fix ui
+	val listKeywords: List<Keyword>
+		get() = keyword?.takeIf { it.isNotEmpty() }
+			?.split(", ")
+			?.map { Keyword(it) }
+			?: emptyList()
+	val listKandunganKeywords: List<Keyword>
+		get() = kandungan?.takeIf { it.isNotEmpty() }
+			?.split(", ")
+			?.map { Keyword(it) }
+			?: emptyList()
+}
+
+//fix api call
+class RekomendasiMenuAdapter : JsonDeserializer<List<RekomendasiMenu>> {
+	override fun deserialize(
+		json: JsonElement?,
+		typeOfT: Type?,
+		context: JsonDeserializationContext?
+	): List<RekomendasiMenu> {
+		val rekomendasiMenuJson = json?.asString ?: return emptyList()
+		val type = object : TypeToken<List<RekomendasiMenu>>() {}.type
+		return Gson().fromJson(rekomendasiMenuJson, type)
+	}
 }
 
 @Parcelize

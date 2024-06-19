@@ -54,11 +54,12 @@ interface ApiService {
     @GET("allHerbs")
     suspend fun getAllHerbs(): List<AppResponseItem>
 
-    @GET("allHerbs")
+    //fix api call
+    @GET("/search")
     suspend fun searchTanaman(
         @Query("kategori") kategori: String,
         @Query("value")value: String
-    ) : List<AppResponseItem>
+    ) : List<com.capstone.herbalease.data.model.AppResponseItem>
 
     @GET("forum-discussion/{id}")
     fun getDiscussion(

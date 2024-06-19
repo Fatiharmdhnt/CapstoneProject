@@ -32,7 +32,8 @@ class AppRepository(
     fun searchIngredients(query: String) = liveData {
         emit(Result.Loading)
         try {
-            val searchedIngredientsResponse = apiService.searchTanaman("Tanaman", query)
+            //fix api call
+            val searchedIngredientsResponse = apiService.searchTanaman("tanaman", query)
             emit(Result.Success(searchedIngredientsResponse))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))

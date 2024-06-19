@@ -64,7 +64,9 @@ class IngredientsDetailFragment : Fragment() {
                     layoutKandugnan.isVisible = true
 
                     val kandunganAdapter = KeywordsAdapter()
+                    //fix ui
                     kandunganAdapter.submitList(it.listKandungan)
+                    kandunganAdapter.setListKeyword(it.listKandunganKeywords)
 
                     rvKandungan.apply {
                         layoutManager =
@@ -96,7 +98,9 @@ class IngredientsDetailFragment : Fragment() {
                     layoutKeluhan.isVisible = true
 
                     val keluhanAdapter = KeywordsAdapter()
+                    //fix ui
                     keluhanAdapter.submitList(it.listKeluhan)
+                    keluhanAdapter.setListKeyword(it.listKeywords)
 
                     rvKeluhan.apply {
                         layoutManager =
