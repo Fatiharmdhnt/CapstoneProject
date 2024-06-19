@@ -1,8 +1,8 @@
 package com.capstone.herbalease.view.fitur.diskusi.detail
 
 import androidx.lifecycle.ViewModel
-import com.capstone.herbalease.data.model.response.Comments
-import com.capstone.herbalease.data.model.response.ForumDiscussion
+import com.capstone.herbalease.data.model.Comments
+import com.capstone.herbalease.data.model.ForumDiscussion
 import com.capstone.herbalease.di.FakeData
 
 class DetailDiscussionViewModel : ViewModel(){

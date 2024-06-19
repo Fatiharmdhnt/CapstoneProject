@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.capstone.herbalease.data.model.response.Comments
+import com.capstone.herbalease.data.model.Comments
 import com.capstone.herbalease.databinding.CommentItemBinding
 
 class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {

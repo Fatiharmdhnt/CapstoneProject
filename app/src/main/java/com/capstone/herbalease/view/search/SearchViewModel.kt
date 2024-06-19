@@ -16,8 +16,8 @@ class SearchViewModel(private val repository: AppRepository) : ViewModel() {
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _searchedIngredients = MutableLiveData<List<AppResponseItem>>()
-    val searchedIngredients: LiveData<List<AppResponseItem>> = _searchedIngredients
+    private val _searchedIngredients = MutableLiveData<List<AppResponseItem>?>()
+    val searchedIngredients: MutableLiveData<List<AppResponseItem>?> = _searchedIngredients
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage

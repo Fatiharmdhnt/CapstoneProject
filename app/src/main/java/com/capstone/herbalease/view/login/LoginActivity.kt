@@ -85,7 +85,8 @@ class LoginActivity : AppCompatActivity() {
                                     viewModel.saveSession(
                                         UserModel(
                                             email,
-                                            result.data.loginResult!!.token
+                                            result.data.loginResult.userId,
+                                            result.data.loginResult.token
                                         )
                                     )
                                     val alertDialog = AlertDialog.Builder(this@LoginActivity).apply {

@@ -22,6 +22,7 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -59,10 +60,10 @@ interface ApiService {
         @Query("value")value: String
     ) : List<AppResponseItem>
 
-    @GET("forum-discussion/:{id}")
+    @GET("forum-discussion/{id}")
     fun getDiscussion(
-        @Query("id") id : Int
-    ): Call<GetDiscussionResponse>
+        @Path("id") id : Int
+    ): List<GetDiscussionResponse>
 
     @Multipart
     @POST("forum-discussion")
@@ -71,18 +72,18 @@ interface ApiService {
         @Part photoDiscussionUrl: MultipartBody.Part,
         @Part("description") description: RequestBody?,
         @Part("keyword") keyword: RequestBody?
-    ) : Call<PostDiscussionResponse>
+    ) : PostDiscussionResponse
 
     @FormUrlEncoded
-    @POST("forum-discussion/:{id}/comment")
+    @POST("forum-discussion/{id}/comment")
     fun postComment(
-        @Query("id") id : Int,
+        @Path("id") id : Int,
         @Field("forumDiscussionId") discId : Int,
         @Field("comment") comment : String
-    ) : Call<PostCommentResponse>
+    ) : PostCommentResponse
 
-    @DELETE("forum-discussion/:id")
+    @DELETE("forum-discussion/{id}")
     fun deleteDiscussion(
-
-    )
+        @Path("id") id: Int
+    ) : String
 }

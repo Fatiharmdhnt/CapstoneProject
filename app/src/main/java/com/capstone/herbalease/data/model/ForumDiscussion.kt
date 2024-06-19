@@ -1,16 +1,16 @@
-package com.capstone.herbalease.data.model.response
+package com.capstone.herbalease.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ForumDiscussion(
-    val name: String,
-    val photoProfileUrl: String,
-    val title: String,
-    val description: String,
-    val keyword: List<Keyword>,
-    val photoDiscussionUrl: String?,
+    var name: String,
+    var photoProfileUrl: String,
+    var title: String,
+    var description: String,
+    var keyword: List<Keyword>,
+    var photoDiscussionUrl: String?,
     var comments : MutableList<Comments>?
 ) : Parcelable
 

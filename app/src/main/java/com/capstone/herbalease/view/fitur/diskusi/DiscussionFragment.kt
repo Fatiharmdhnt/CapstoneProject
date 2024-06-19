@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.capstone.herbalease.data.model.response.ForumDiscussion
+import com.capstone.herbalease.data.model.ForumDiscussion
 import com.capstone.herbalease.databinding.FragmentDiscussionBinding
 import com.capstone.herbalease.view.adapter.DiscussionAdapter
 import com.capstone.herbalease.view.fitur.diskusi.detail.DetailDiscussionActivity
@@ -57,12 +57,16 @@ class DiscussionFragment : Fragment() {
                 if(!query.isNullOrBlank()){
                     viewModel.searchDiscussion(query)
                     viewModel.listDiscussion.observe(viewLifecycleOwner, Observer {
-                        adapter.setListDiscussion(it)
+                        if (it != null) {
+                            adapter.setListDiscussion(it)
+                        }
                     })
                 } else if (query == ""){
                     viewModel.setDiscussion()
                     viewModel.listDiscussion.observe(viewLifecycleOwner, Observer {
-                        adapter.setListDiscussion(it)
+                        if (it != null) {
+                            adapter.setListDiscussion(it)
+                        }
                     })
                 }
                 return true
@@ -72,12 +76,16 @@ class DiscussionFragment : Fragment() {
                 if(!newText.isNullOrBlank()){
                     viewModel.searchDiscussion(newText)
                     viewModel.listDiscussion.observe(viewLifecycleOwner, Observer {
-                        adapter.setListDiscussion(it)
+                        if (it != null) {
+                            adapter.setListDiscussion(it)
+                        }
                     })
                 } else if (newText == ""){
                     viewModel.setDiscussion()
                     viewModel.listDiscussion.observe(viewLifecycleOwner, Observer {
-                        adapter.setListDiscussion(it)
+                        if (it != null) {
+                            adapter.setListDiscussion(it)
+                        }
                     })
                 }
                 return true
@@ -98,7 +106,9 @@ class DiscussionFragment : Fragment() {
             }
         })
         viewModel.listDiscussion.observe(viewLifecycleOwner, Observer{
-            adapter.setListDiscussion(it)
+            if (it != null) {
+                adapter.setListDiscussion(it)
+            }
         })
     }
 

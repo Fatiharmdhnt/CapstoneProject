@@ -13,8 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
-import com.capstone.herbalease.data.model.response.ForumDiscussion
-import com.capstone.herbalease.data.model.response.Keyword
+import com.capstone.herbalease.data.model.ForumDiscussion
+import com.capstone.herbalease.data.model.Keyword
 import com.capstone.herbalease.databinding.ActivityAddDicussionBinding
 import com.capstone.herbalease.di.FakeData
 import com.capstone.herbalease.view.adapter.KeywordAdapter

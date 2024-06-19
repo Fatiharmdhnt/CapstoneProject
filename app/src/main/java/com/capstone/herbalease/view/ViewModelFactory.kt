@@ -8,6 +8,7 @@ import com.capstone.herbalease.data.pref.AppRepository
 import com.capstone.herbalease.data.pref.MainRepository
 import com.capstone.herbalease.data.pref.UserRepository
 import com.capstone.herbalease.di.Injection
+import com.capstone.herbalease.view.fitur.diskusi.DiscussionViewModel
 import com.capstone.herbalease.view.fitur.favorite.FavoriteHistoryViewModel
 import com.capstone.herbalease.view.fitur.home.HomeViewModel
 import com.capstone.herbalease.view.fitur.profile.ProfileViewModel
@@ -51,6 +52,11 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> {
                 val appRepository = AppRepository(apiService)
                 SearchViewModel(appRepository) as T
+            }
+
+            modelClass.isAssignableFrom(DiscussionViewModel::class.java) -> {
+                val appRepository = AppRepository(apiService)
+                DiscussionViewModel(userRepository, appRepository) as T
             }
 
             modelClass.isAssignableFrom(FavoriteHistoryViewModel::class.java) -> {

@@ -2,6 +2,7 @@ package com.capstone.herbalease.data.model
 
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
+import com.capstone.herbalease.data.model.response.RekomendasiMenu
 import com.google.gson.annotations.SerializedName
 
 @Parcelize
@@ -15,28 +16,28 @@ data class AppResponse(
 data class AppResponseItem(
 
 	@field:SerializedName("khasiat")
-	val khasiat: String? = null,
+	var khasiat: String? = null,
 
 	@field:SerializedName("nama")
-	val nama: String? = null,
+	var nama: String? = null,
 
 	@field:SerializedName("rekomendasi_menu")
-	val rekomendasiMenu: List<RekomendasiMenu?>? = null,
+	var rekomendasiMenu: List<RekomendasiMenu?>? = null,
 
 	@field:SerializedName("image_url")
-	val imageUrl: String? = null,
+	var imageUrl: String? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	var id: Int? = null,
 
 	@field:SerializedName("deskripsi")
-	val deskripsi: String? = null,
+	var deskripsi: String? = null,
 
 	@field:SerializedName("keyword")
-	val keyword: String? = null,
+	var keyword: String? = null,
 
 	@field:SerializedName("kandungan")
-	val kandungan: String? = null
+	var kandungan: String? = null
 ) : Parcelable {
 
 	val listKandungan: List<String>
