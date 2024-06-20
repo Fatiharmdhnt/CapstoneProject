@@ -45,7 +45,9 @@ class SearchActivity : AppCompatActivity() {
             }
             searchedIngredients.observe(this@SearchActivity) {
                 searchIngredientsAdapter.submitList(it)
-                binding.emptyView.isVisible = it.isEmpty()
+                if (it != null) {
+                    binding.emptyView.isVisible = it.isEmpty()
+                }
             }
             errorMessage.observe(this@SearchActivity) {
                 // Handle error here

@@ -62,7 +62,9 @@ class SearchFragment : Fragment() {
             searchedIngredients.observe(viewLifecycleOwner) {
                 Log.d("searchFragment", "searched ${it}")
                 searchIngredientsAdapter.submitList(it)
-                binding.emptyView.isVisible = it.isEmpty()
+                if (it != null) {
+                    binding.emptyView.isVisible = it.isEmpty()
+                }
             }
 
             errorMessage.observe(viewLifecycleOwner) {
