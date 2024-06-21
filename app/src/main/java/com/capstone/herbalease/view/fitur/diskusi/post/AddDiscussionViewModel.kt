@@ -6,12 +6,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.capstone.herbalease.data.model.response.discussion.PostDiscussionResponse
+import com.capstone.herbalease.data.model.retrofit.ApiConfig
 import com.capstone.herbalease.data.pref.Keyword
 import com.capstone.herbalease.data.pref.AppRepository
 import com.capstone.herbalease.data.pref.UserModel
@@ -23,6 +25,9 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -30,7 +35,7 @@ import java.io.InputStream
 import java.util.Date
 import java.util.Locale
 
-class AddDiscussionViewModel(private val repository: UserRepository, private val appRepository: AppRepository) : ViewModel() {
+class AddDiscussionViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val _responseAddDiscussion = MutableLiveData<PostDiscussionResponse?>()
     val responseAddDiscussion : LiveData<PostDiscussionResponse?> get() = _responseAddDiscussion
@@ -66,30 +71,57 @@ class AddDiscussionViewModel(private val repository: UserRepository, private val
             imageFile.name,
             requestImage
         )
-        viewModelScope.launch {
-            val response = appRepository.postDiscussion(
-                requestTitle,
+//        viewModelScope.launch {
+//            val response = appRepository.postDiscussion(
+//                "Bearer ${_userSession.value?.token}",
+//                requestTitle,
+//                multipartBody,
+//                requestDesc,
+//                requestKeyword
+//            )
+//
+//            response.asFlow().collect{ result ->
+//                when (result) {
+//                    is Result.Loading -> {
+//                        _isLoading.postValue(true)
+//                    }
+//                    is Result.Success -> {
+//                        _isLoading.postValue(false)
+//                        _responseAddDiscussion.postValue(result.data)
+//                    }
+//                    is Result.Error -> {
+//                        _isLoading.value = false
+//                        _errorMessage.value = result.error
+//                    }
+//                }
+//
+//            }
+//        }
+        _userSession.value?.let {
+            ApiConfig.getApiService(context).postDiscussion(
+                it.id,
                 multipartBody,
+                requestTitle,
                 requestDesc,
                 requestKeyword
-            )
+            ).enqueue(object : Callback<PostDiscussionResponse>{
+                override fun onResponse(
+                    call: Call<PostDiscussionResponse>,
+                    response: Response<PostDiscussionResponse>
+                ) {
+                    if (response.isSuccessful){
+                        _responseAddDiscussion.postValue(response.body())
 
-            response.asFlow().collect{ result ->
-                when (result) {
-                    is Result.Loading -> {
-                        _isLoading.postValue(true)
-                    }
-                    is Result.Success -> {
-                        _isLoading.postValue(false)
-                        _responseAddDiscussion.postValue(result.data)
-                    }
-                    is Result.Error -> {
-                        _isLoading.value = false
-                        _errorMessage.value = result.error
+                    } else {
+                        Log.e("AddFailed", "Failed to Add Discussion")
                     }
                 }
 
-            }
+                override fun onFailure(call: Call<PostDiscussionResponse>, t: Throwable) {
+                    Log.e("AddRequestFailed", "Request Add Discussion Failed")
+                }
+
+            })
         }
     }
 

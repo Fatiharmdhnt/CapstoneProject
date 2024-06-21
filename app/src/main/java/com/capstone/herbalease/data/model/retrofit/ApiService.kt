@@ -12,11 +12,13 @@ import com.capstone.herbalease.data.model.response.discussion.PostCommentRespons
 import com.capstone.herbalease.data.model.response.discussion.PostDiscussionResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -59,30 +61,32 @@ interface ApiService {
         @Query("value")value: String
     ) : List<AppResponseItem>
 
-    @GET("forum-discussion/{id}")
-    fun getDiscussion(
-        @Path("id") id : Int
-    ): List<GetDiscussionResponseItem>
+    @GET("forum-discussion")
+    suspend fun getDiscussion(): List<GetDiscussionResponseItem>
 
     @Multipart
-    @POST("forum-discussion")
+    @POST("forum-discussion/")
     fun postDiscussion(
-        @Part("title") title: RequestBody,
+        @Query("userId") id : Int,
         @Part photoDiscussionUrl: MultipartBody.Part,
+        @Part("title") title: RequestBody,
         @Part("description") description: RequestBody?,
         @Part("keyword") keyword: RequestBody?
-    ) : PostDiscussionResponse
+    ) : Call<PostDiscussionResponse>
 
-    @FormUrlEncoded
     @POST("forum-discussion/{id}/comment")
     fun postComment(
         @Path("id") id : Int,
-        @Field("forumDiscussionId") discId : Int,
-        @Field("comment") comment : String
-    ) : PostCommentResponse
+        @Query("userId") idUser : Int,
+        @Body comment : Komen
+    ) : Call<PostCommentResponse>
 
     @DELETE("forum-discussion/{id}")
     fun deleteDiscussion(
         @Path("id") id: Int
     ) : String
 }
+
+data class Komen(
+    var comment: String
+)

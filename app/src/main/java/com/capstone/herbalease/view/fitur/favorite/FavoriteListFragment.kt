@@ -16,11 +16,10 @@ import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.SearchIngredientsAdapter
 import com.capstone.herbalease.view.ingredients_detail.IngredientsDetailFragment
 
-class FavoriteListFragment : Fragment(R.layout.favorite_item_recyclerview){
-    private var _binding : FavoriteItemRecyclerviewBinding? = null
+class FavoriteListFragment : Fragment(R.layout.favorite_item_recyclerview) {
+    private var _binding: FavoriteItemRecyclerviewBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: SearchIngredientsAdapter
-    private var listFavorite : List<AppResponseItem>? = null
     private lateinit var viewModel: FavoriteHistoryViewModel
 
     override fun onCreateView(
@@ -28,32 +27,41 @@ class FavoriteListFragment : Fragment(R.layout.favorite_item_recyclerview){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FavoriteItemRecyclerviewBinding.inflate(inflater, container,false)
+        _binding = FavoriteItemRecyclerviewBinding.inflate(inflater, container, false)
         adapter = SearchIngredientsAdapter()
         viewModel = ViewModelProvider(this, ViewModelFactory(requireContext())).get(FavoriteHistoryViewModel::class.java)
-        setListeners()
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.listFavorite.observe(viewLifecycleOwner, Observer {
-            listFavorite = it
-        })
-
-        adapter.submitList(listFavorite)
-
-        binding.list.setHasFixedSize(false)
-        binding.list.layoutManager = LinearLayoutManager(activity)
-        binding.list.adapter = adapter
+        setupRecyclerView()
+        observeFavoriteList()
     }
 
-    private fun setListeners() {
-        binding.apply {
-            adapter.onIngredientsClick = {
-                val bundle = Bundle()
-                bundle.putParcelable(IngredientsDetailFragment.EXTRA_INGREDIENTS, it)
-                findNavController().navigate(R.id.navigation_detail, bundle)
-            }
+    private fun setupRecyclerView() {
+        binding.list.apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@FavoriteListFragment.adapter
         }
+    }
+
+    private fun observeFavoriteList() {
+        viewModel.listFavorite.observe(viewLifecycleOwner, Observer { list ->
+            list?.let {
+                adapter.submitList(it)
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFavorite() // Ensure data is refreshed when fragment is resumed
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

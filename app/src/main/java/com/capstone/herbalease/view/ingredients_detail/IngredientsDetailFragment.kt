@@ -2,26 +2,32 @@ package com.capstone.herbalease.view.ingredients_detail
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.capstone.herbalease.R
 import com.capstone.herbalease.data.model.response.AppResponseItem
+import com.capstone.herbalease.data.pref.Ingredient
+import com.capstone.herbalease.data.pref.Ingredients
 import com.capstone.herbalease.databinding.ActivityIngredientsDetailBinding
+import com.capstone.herbalease.view.ViewModelFactory
 import com.capstone.herbalease.view.adapter.BenefitAdapter
 import com.capstone.herbalease.view.adapter.KeywordsAdapter
 import com.capstone.herbalease.view.adapter.MenuRecommendationAdapter
+import com.capstone.herbalease.view.fitur.favorite.FavoriteHistoryViewModel
 
 class IngredientsDetailFragment : Fragment() {
     private var _binding: ActivityIngredientsDetailBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var viewModel: FavoriteHistoryViewModel
     private var isFavorited = false
 
     private val ingredients by lazy {
@@ -41,10 +47,13 @@ class IngredientsDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = ActivityIngredientsDetailBinding.inflate(inflater, container, false)
-
+        viewModel = ViewModelProvider(this, ViewModelFactory(requireContext())).get(FavoriteHistoryViewModel::class.java)
         setViews()
         setListeners()
-
+        ingredients?.let { appResponseToIngredient(it) }?.let {
+            Log.d("IngredientsDetailFragment", "Adding ingredient to history: $it")
+            viewModel.addHistory(it)
+        }
         return binding.root
     }
 
@@ -126,6 +135,7 @@ class IngredientsDetailFragment : Fragment() {
                 } else {
                     sectionRecommendMenu.isVisible = false
                 }
+
             } ?: run {
                 // Handle the case when ingredients are null
             }
@@ -145,6 +155,7 @@ class IngredientsDetailFragment : Fragment() {
                             R.drawable.ic_fav_fill
                         )
                     )
+                    viewModel.addFavorite(appResponseToIngredients(ingredients))
                 } else {
                     btnFav.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -152,8 +163,49 @@ class IngredientsDetailFragment : Fragment() {
                             R.drawable.ic_fav
                         )
                     )
+                    ingredients?.id?.let { it1 -> viewModel.removeFavorite(it1) }
                 }
             }
+        }
+    }
+
+    private fun appResponseToIngredient(response: AppResponseItem): Ingredient {
+        return Ingredient(
+            id = response.id ?: 0,
+            name = response.nama ?: "",
+            imageUrl = response.imageUrl ?: "",
+            description = response.deskripsi ?: "",
+            listKhasiat = response.listKhasiat,
+            listKeywords = response.listKeywords.map { it.keyword },
+            listKandungan = response.listKandungan,
+            listRekomendasi = response.rekomendasiMenu?.filterNotNull() ?: emptyList()
+        )
+    }
+
+    private fun appResponseToIngredients(response: AppResponseItem?): Ingredients {
+        return if (response != null) {
+            Ingredients(
+                id = response.id ?: 0,
+                name = response.nama ?: "",
+                imageUrl = response.imageUrl ?: "",
+                description = response.deskripsi ?: "",
+                listKhasiat = response.listKhasiat,
+                listKeywords = response.listKeywords.map { it.keyword },
+                listKandungan = response.listKandungan,
+                listRekomendasi = response.rekomendasiMenu?.filterNotNull() ?: emptyList()
+            )
+        } else {
+            // Provide a default value or handle the null case appropriately
+            Ingredients(
+                id = 0,
+                name = "",
+                imageUrl = "",
+                description = "",
+                listKhasiat = emptyList(),
+                listKeywords = emptyList(),
+                listKandungan = emptyList(),
+                listRekomendasi = emptyList()
+            )
         }
     }
 

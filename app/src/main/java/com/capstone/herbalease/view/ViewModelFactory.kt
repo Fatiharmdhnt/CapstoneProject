@@ -4,9 +4,12 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.capstone.herbalease.data.model.retrofit.ApiConfig
 import com.capstone.herbalease.data.pref.AppRepository
 import com.capstone.herbalease.data.pref.MainRepository
+import com.capstone.herbalease.data.pref.UserPreference
 import com.capstone.herbalease.data.pref.UserRepository
+import com.capstone.herbalease.data.pref.dataStore
 import com.capstone.herbalease.di.Injection
 import com.capstone.herbalease.view.fitur.diskusi.DiscussionViewModel
 import com.capstone.herbalease.view.fitur.diskusi.detail.DetailDiscussionViewModel
@@ -63,12 +66,11 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
 
             modelClass.isAssignableFrom(DetailDiscussionViewModel::class.java) -> {
                 val appRepository = AppRepository(apiService)
-                DetailDiscussionViewModel(userRepository, appRepository) as T
+                DetailDiscussionViewModel(provideRepository(context)) as T
             }
 
             modelClass.isAssignableFrom(AddDiscussionViewModel::class.java) -> {
-                val appRepository = AppRepository(apiService)
-                AddDiscussionViewModel(userRepository, appRepository) as T
+                AddDiscussionViewModel(provideRepository(context)) as T
             }
 
             modelClass.isAssignableFrom(FavoriteHistoryViewModel::class.java) -> {
@@ -78,4 +80,11 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
+
+    fun provideRepository(context: Context): UserRepository {
+        val pref = UserPreference.getInstance(context.dataStore)
+        val apiService = ApiConfig.getApiService(context)
+        return UserRepository.getInstance(pref, apiService)
+    }
+
 }

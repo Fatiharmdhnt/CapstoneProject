@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.herbalease.R
@@ -32,7 +33,7 @@ class AddDicussionActivity : AppCompatActivity() {
     private val keywords = mutableListOf<Keyword>()
     private lateinit var adapter: KeywordAdapter
     private var uploadedImageView: ImageView? = null
-    private var imageUri : Uri? = null
+    private var imageUri: Uri? = null
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
@@ -56,32 +57,42 @@ class AddDicussionActivity : AppCompatActivity() {
         binding.keyword.adapter = adapter
 
         addDiscussion()
+
     }
 
-    private fun addDiscussion(){
+    private fun addDiscussion() {
         binding.postDiscussion.isEnabled = false
-        //Set Keyword
+
+        // Set Keyword
         binding.addKeyword.setOnClickListener {
             showAddKeywordDialog()
         }
 
-        //Set Image
-        binding.uploadPhotoFrame.setOnClickListener{
+        // Set Image
+        binding.uploadPhotoFrame.setOnClickListener {
             openGalleryForImage()
         }
 
-        if (binding.judul != null){
-            if (binding.deskripsi != null){
-                binding.postDiscussion.isEnabled = true
-                binding.postDiscussion.setOnClickListener {
-                    postDiscussion()
-                }
-            }else{
-                makeToast("isi Deskripsi terlebih dahulu")
-            }
-        } else {
-            makeToast("Isi Judul terlebih dahulu")
+        // Enable button only when both fields are not empty
+        binding.judul.addTextChangedListener {
+            validateFields()
         }
+        binding.deskripsi.addTextChangedListener {
+            validateFields()
+        }
+
+        // Set onClickListener for the postDiscussion button
+        binding.postDiscussion.setOnClickListener {
+            if (imageUri != null) {
+                postDiscussion()
+            } else {
+                makeToast("Please upload an image first.")
+            }
+        }
+    }
+
+    private fun validateFields() {
+        binding.postDiscussion.isEnabled = !binding.judul.text.isNullOrEmpty() && !binding.deskripsi.text.isNullOrEmpty()
     }
 
     private fun showAddKeywordDialog() {
@@ -104,43 +115,44 @@ class AddDicussionActivity : AppCompatActivity() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    private fun showImage(){
-        val imageBitmap = imageUri?.let { viewModel.resizeAndCompressImage(it, contentResolver, 1080, 1080,1_000_000) }
+    private fun showImage() {
+        val imageBitmap = imageUri?.let {
+            viewModel.resizeAndCompressImage(it, contentResolver, 1080, 1080, 1_000_000)
+        }
         binding.uploadedImage.setImageBitmap(imageBitmap)
         binding.uploadedImage.visibility = ImageView.VISIBLE
         binding.uploadText.visibility = TextView.GONE
     }
 
-    private fun postDiscussion(){
+    private fun postDiscussion() {
         viewModel.getSession()
         viewModel.userSession.observe(this, Observer {
-            imageUri?.let {
+            imageUri?.let { uri ->
                 viewModel.postDiscussion(
                     binding.judul.text.toString(),
-                    it,
+                    uri,
                     binding.deskripsi.text.toString(),
                     keywords,
-                    this)
+                    this
+                )
             }
         })
-
-        viewModel.isLoading.observe(this, Observer {
-            viewModel.errorMessage.observe(this, Observer {
-                if (it == null || it == ""){
-                    makeToast("Berhasil menambah dikusi")
-
-                    setResult(Activity.RESULT_OK)
-                    finish()
-                } else {
-                    makeToast(it.toString())
-                }
-            })
-
+        viewModel.responseAddDiscussion.observe(this, Observer {
+            if (it != null){
+                makeToast("Berhasil menambah diskusi")
+                setResult(Activity.RESULT_OK)
+                finish()
+            } else {
+                makeToast("Gagal Menambahkan Dikusi")
+            }
         })
-
     }
 
     private fun makeToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private const val PICK_IMAGE_REQUEST = 1
     }
 }

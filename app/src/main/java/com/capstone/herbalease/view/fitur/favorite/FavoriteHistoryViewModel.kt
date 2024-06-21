@@ -1,6 +1,7 @@
 package com.capstone.herbalease.view.fitur.favorite
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import com.capstone.herbalease.view.fitur.favorite.database.FavoriteDao
 import com.capstone.herbalease.view.fitur.favorite.database.FavoriteDatabase
 import com.capstone.herbalease.view.fitur.favorite.database.HistoryDao
 import com.capstone.herbalease.view.fitur.favorite.database.HistoryDatabase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -50,6 +52,18 @@ class FavoriteHistoryViewModel(app : Application) : AndroidViewModel(app) {
         }
     }
 
+    fun addFavorite(ingredients : Ingredients){
+        CoroutineScope(Dispatchers.IO).launch {
+            favDao?.addFavorite(ingredients)
+        }
+    }
+
+    fun removeFavorite(id : Int){
+        CoroutineScope(Dispatchers.IO).launch {
+            favDao?.removeFavorite(id)
+        }
+    }
+
     fun getHistory(){
         viewModelScope.launch {
             val history = withContext(Dispatchers.IO) {
@@ -62,6 +76,16 @@ class FavoriteHistoryViewModel(app : Application) : AndroidViewModel(app) {
             _listHistory.postValue(list)
         }
     }
+
+    fun addHistory(ingredient: Ingredient) {
+        Log.d("FavoriteHistoryViewModel", "Adding to history: $ingredient")
+        CoroutineScope(Dispatchers.IO).launch {
+            hisDao?.addHistory(ingredient)
+            Log.d("FavoriteHistoryViewModel", "History added: $ingredient")
+        }
+    }
+
+
 
     private fun listToAppResponse(ingredients: Ingredients): AppResponseItem? {
         return AppResponseItem(

@@ -87,7 +87,8 @@ class LoginActivity : AppCompatActivity() {
                                             email,
                                             result.data.loginResult.userId,
                                             result.data.loginResult.token,
-                                            true
+                                            true,
+                                            result.data.loginResult.photoProfile
                                         )
                                     )
                                     val alertDialog = AlertDialog.Builder(this@LoginActivity).apply {

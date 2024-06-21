@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
@@ -21,6 +22,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[ID_USER] = user.id
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
+            preferences[PROFILE_PICTURE] = user.profilePicture
         }
     }
 
@@ -30,9 +32,16 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
                 preferences[EMAIL_KEY] ?: "",
                 preferences[ID_USER] ?: 0,
                 preferences[TOKEN_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] ?: false
+                preferences[IS_LOGIN_KEY] ?: false,
+                preferences[PROFILE_PICTURE] ?: ""
             )
         }
+    }
+
+    suspend fun getToken(): String? {
+        return dataStore.data.map { preferences ->
+            preferences[TOKEN_KEY]
+        }.firstOrNull()
     }
 
     suspend fun logout() {
@@ -49,6 +58,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val ID_USER = intPreferencesKey("id")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val PROFILE_PICTURE = stringPreferencesKey("profilePicture")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

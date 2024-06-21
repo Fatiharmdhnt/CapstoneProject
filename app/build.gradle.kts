@@ -69,9 +69,9 @@ dependencies {
     implementation("androidx.activity:activity:1.9.0")
 
     // Networking
-    implementation("com.squareup.retrofit2:retrofit:2.10.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.10.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.9")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // Core Libraries
     implementation("androidx.core:core-ktx:1.13.1")

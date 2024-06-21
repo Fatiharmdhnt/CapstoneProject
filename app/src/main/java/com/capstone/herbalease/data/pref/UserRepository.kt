@@ -1,9 +1,11 @@
 package com.capstone.herbalease.data.pref
 
+import com.capstone.herbalease.data.model.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    apiService : ApiService
 ) {
 
     suspend fun saveSession(user: UserModel) {
@@ -22,10 +24,11 @@ class UserRepository private constructor(
         @Volatile
         private var instance: UserRepository? = null
         fun getInstance(
-            userPreference: UserPreference
+            userPreference: UserPreference,
+            apiService: ApiService
         ): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(userPreference)
+                instance ?: UserRepository(userPreference, apiService)
             }.also { instance = it }
     }
 }

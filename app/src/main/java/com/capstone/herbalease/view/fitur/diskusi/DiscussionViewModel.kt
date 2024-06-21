@@ -1,5 +1,6 @@
 package com.capstone.herbalease.view.fitur.diskusi
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,10 +37,8 @@ class DiscussionViewModel(private val repository: UserRepository, private val ap
         }
     }
     fun setDiscussion() {
-        val id = _userSession.value!!.id
-        println( _userSession.value!!.id)
         viewModelScope.launch {
-            val response = appRepository.getDiscussion(_userSession.value!!.id)
+            val response = appRepository.getDiscussion()
 
             response.asFlow().collect { result ->
                 when (result) {
@@ -53,6 +52,7 @@ class DiscussionViewModel(private val repository: UserRepository, private val ap
                     is Result.Error -> {
                         _isLoading.value = false
                         _errorMessage.value = result.error
+                        Log.i("Error", result.error)
                     }
                 }
             }
@@ -81,7 +81,7 @@ class DiscussionViewModel(private val repository: UserRepository, private val ap
                 id = item.id ?: 0, // Provide a default value or handle the null case
                 name = item.name.toString(),
                 title = item.title.toString(),
-                photoProfileUrl = item.photoProfileUrl.toString(),
+                photoProfileUrl = item.user?.profilePictureUrl.toString(),
                 description = item.description.toString(),
                 photoDiscussionUrl = item.photoDiscussionUrl.toString(),
                 keyword = mutableListOf(),
@@ -99,7 +99,7 @@ class DiscussionViewModel(private val repository: UserRepository, private val ap
             // Comments
             val commentItem: MutableList<Comments> = mutableListOf()
             item.comments?.forEach { c ->
-                commentItem.add(Comments(c?.namekomen.toString(), c?.photoProfileUrlkomen.toString(), c?.comment.toString()))
+                commentItem.add(Comments(c?.name.toString(), c?.user?.profilePictureUrl.toString(), c?.comment.toString()))
             }
             discuss.comments = commentItem
 

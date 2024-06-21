@@ -8,10 +8,22 @@ data class GetDiscussionResponse(
 	val getDiscussionResponse: List<GetDiscussionResponseItem?>? = null
 )
 
-data class GetDiscussionResponseItem(
+data class UserItem(
 
-	@field:SerializedName("photoProfileUrl")
-	val photoProfileUrl: String? = null,
+	@field:SerializedName("profile_picture_url")
+	val profilePictureUrl: String? = null,
+
+	@field:SerializedName("name")
+	val name: String? = null,
+
+	@field:SerializedName("id")
+	val id: Int? = null,
+
+	@field:SerializedName("email")
+	val email: String? = null
+)
+
+data class GetDiscussionResponseItem(
 
 	@field:SerializedName("comments")
 	val comments: List<CommentsItem?>? = null,
@@ -32,20 +44,32 @@ data class GetDiscussionResponseItem(
 	val title: String? = null,
 
 	@field:SerializedName("keyword")
-	val keyword: String? = null
+	val keyword: String? = null,
+
+	@field:SerializedName("userId")
+	val userId: Int? = null,
+
+	@field:SerializedName("user")
+	val user: UserItem? = null
 )
 
 data class CommentsItem(
 
-	@field:SerializedName("namekomen")
-	val namekomen: String? = null,
+	@field:SerializedName("name")
+	val name: String? = null,
 
 	@field:SerializedName("comment")
-	val comment: String? = null,
-
-	@field:SerializedName("photoProfileUrlkomen")
-	val photoProfileUrlkomen: String? = null,
+	val comment: Any? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null
+	val id: Int? = null,
+
+	@field:SerializedName("userId")
+	val userId: Int? = null,
+
+	@field:SerializedName("user")
+	val user: UserItem? = null,
+
+	@field:SerializedName("forumDiscussionId")
+	val forumDiscussionId: Int? = null
 )

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.capstone.herbalease.R
 import com.capstone.herbalease.data.pref.ForumDiscussion
 import com.capstone.herbalease.databinding.FragmentItemBinding
 
@@ -32,8 +33,12 @@ class DiscussionAdapter : RecyclerView.Adapter<DiscussionAdapter.ViewHolder>() {
             }
 
             binding.userName.text = preview.name
-            Glide.with(binding.photoProfile.context).load(preview.photoProfileUrl)
-                .into(binding.photoProfile)
+            if (preview.photoDiscussionUrl != null){
+                Glide.with(binding.photoProfile.context).load(preview.photoProfileUrl)
+                    .into(binding.photoProfile)
+            } else {
+                binding.photoProfile.setImageResource(R.drawable.baseline_supervised_user_circle_24)
+            }
             binding.title.text = preview.title
             binding.description.text = preview.description
 

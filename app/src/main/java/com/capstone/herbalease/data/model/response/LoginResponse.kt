@@ -29,5 +29,8 @@ data class LoginResult(
     val email: String,
 
     @field:SerializedName("token")
-    val token: String
+    val token: String,
+
+    @field:SerializedName("profile_picture_url")
+    val photoProfile : String
 )

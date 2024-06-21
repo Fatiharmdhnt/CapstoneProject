@@ -52,42 +52,14 @@ class AppRepository(
 
 
     //DISCUSSION FUNCTION
-    fun getDiscussion(id : Int) = liveData {
+    fun getDiscussion() = liveData {
         emit(Result.Loading)
         try {
-            val getDiscussionResponse = apiService.getDiscussion(id)
+            val getDiscussionResponse = apiService.getDiscussion()
             emit(Result.Success(getDiscussionResponse))
         } catch (e : java.lang.Exception){
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun postDiscussion(
-        title : RequestBody,
-        photoDiscussion : MultipartBody.Part,
-        description : RequestBody,
-        keyword : RequestBody
-    ) = liveData{
-        emit(Result.Loading)
-        try {
-            val postDiscussionResponse = apiService.postDiscussion(title, photoDiscussion, description, keyword)
-            emit(Result.Success(postDiscussionResponse))
-        } catch (e : Exception){
-            emit(Result.Error(e.message.toString()))
-        }
-    }
-
-    fun postComment(
-        id : Int,
-        idDiscussion : Int,
-        comment : String
-    ) = liveData{
-        emit(Result.Loading)
-        try {
-            val postDiscussionResponse = apiService.postComment(id, idDiscussion, comment)
-            emit(Result.Success(postDiscussionResponse))
-        } catch (e : Exception){
-            emit(Result.Error(e.message.toString()))
-        }
-    }
 }

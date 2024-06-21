@@ -1,6 +1,7 @@
 package com.capstone.herbalease.di
 
 import android.content.Context
+import com.capstone.herbalease.data.model.retrofit.ApiConfig
 import com.capstone.herbalease.data.model.retrofit.ApiService
 import com.capstone.herbalease.data.pref.MainRepository
 import com.capstone.herbalease.data.pref.UserPreference
@@ -31,7 +32,7 @@ object Injection {
                         val authenticatedRequest =
                             if (token.isNotEmpty()) {
                                 request.newBuilder()
-                                    .addHeader("Authorization", "Bearer $token")
+                                    .addHeader("authorization", "Bearer $token")
                                     .build()
                             } else {
                                 request
@@ -46,7 +47,8 @@ object Injection {
 
     fun provideUserRepository(context: Context): UserRepository {
         val pref = UserPreference.getInstance(context.dataStore)
-        return UserRepository.getInstance(pref)
+        val apiService = ApiConfig.getApiService(context)
+        return UserRepository.getInstance(pref, apiService)
     }
 
     fun provideMainRepository(context: Context): MainRepository {

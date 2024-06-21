@@ -38,6 +38,12 @@ class DetailDiscussionActivity : AppCompatActivity() {
         binding.buttonSendComment.setOnClickListener {
             postComment()
         }
+
+        viewModel.listComment.observe(this, Observer {
+            if (it != null) {
+                adapterComment.setComment(it)
+            }
+        })
     }
 
 
@@ -68,15 +74,12 @@ class DetailDiscussionActivity : AppCompatActivity() {
 
     private fun postComment(){
         if (binding.editTextComment.text != null){
-            viewModel.getSession()
-            viewModel.userSession.observe(this, Observer {
-                viewModel.sendComment(binding.editTextComment.text.toString(), dataDiscussion)
-                binding.editTextComment.text!!.clear()
-                viewModel.listComment.observe(this, Observer {
-                    if (it != null) {
-                        adapterComment.setComment(it)
-                    }
-                })
+            viewModel.sendComment(this, binding.editTextComment.text.toString(), dataDiscussion)
+            binding.editTextComment.text!!.clear()
+            viewModel.listComment.observe(this, Observer {
+                if (it != null) {
+                    adapterComment.setComment(it)
+                }
             })
         } else {
             makeToast("Tolong Isi Komentar Anda Terlebih Dahulu")
