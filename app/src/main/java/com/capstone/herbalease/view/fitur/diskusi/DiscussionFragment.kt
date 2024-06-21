@@ -74,6 +74,7 @@ class DiscussionFragment : Fragment() {
                 return true
             }
 
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 if(!newText.isNullOrBlank()){
                     viewModel.searchDiscussion(newText)
@@ -96,6 +97,8 @@ class DiscussionFragment : Fragment() {
 
         })
     }
+
+
 
     private fun setListDiscussion(){
         viewModel.getSession()

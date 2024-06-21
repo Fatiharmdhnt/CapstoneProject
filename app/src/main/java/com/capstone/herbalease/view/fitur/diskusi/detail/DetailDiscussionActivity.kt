@@ -28,6 +28,10 @@ class DetailDiscussionActivity : AppCompatActivity() {
         binding = ActivityDetailDiscussionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.backButton.setOnClickListener {
+            onBackPressed() // This will navigate back as per standard Android behavior
+        }
+
         dataDiscussion = intent.getParcelableExtra(EXTRA_DISCUSSION)!!
         adapterKeyword = KeywordAdapter()
         adapterComment = CommentAdapter()

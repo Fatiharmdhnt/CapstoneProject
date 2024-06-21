@@ -52,9 +52,15 @@ class AddDicussionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddDicussionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.backButton.setOnClickListener {
+            onBackPressed() // This will navigate back as per standard Android behavior
+        }
+
         adapter = KeywordAdapter()
         binding.keyword.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.keyword.adapter = adapter
+
 
         addDiscussion()
 
