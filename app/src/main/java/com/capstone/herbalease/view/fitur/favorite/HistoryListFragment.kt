@@ -1,5 +1,6 @@
 package com.capstone.herbalease.view.fitur.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,13 +15,15 @@ import com.capstone.herbalease.data.model.response.AppResponseItem
 import com.capstone.herbalease.data.pref.Ingredients
 import com.capstone.herbalease.databinding.FavoriteItemRecyclerviewBinding
 import com.capstone.herbalease.view.ViewModelFactory
+import com.capstone.herbalease.view.adapter.FavHisAdapter
 import com.capstone.herbalease.view.adapter.SearchIngredientsAdapter
+import com.capstone.herbalease.view.ingredients_detail.IngredientsDetailActivity
 import com.capstone.herbalease.view.ingredients_detail.IngredientsDetailFragment
 
 class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview) {
     private var _binding: FavoriteItemRecyclerviewBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: SearchIngredientsAdapter
+    private lateinit var adapter: FavHisAdapter
     private lateinit var viewModel: FavoriteHistoryViewModel
 
     override fun onCreateView(
@@ -29,7 +32,7 @@ class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview) {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FavoriteItemRecyclerviewBinding.inflate(inflater, container, false)
-        adapter = SearchIngredientsAdapter()
+        adapter = FavHisAdapter()
         viewModel = ViewModelProvider(this, ViewModelFactory(requireContext())).get(FavoriteHistoryViewModel::class.java)
         return binding.root
     }
@@ -38,6 +41,15 @@ class HistoryListFragment : Fragment(R.layout.favorite_item_recyclerview) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeHistoryList()
+
+        adapter.setOnItemClickCallback(object : FavHisAdapter.OnItemClickListener{
+            override fun onItemClick(data: AppResponseItem) {
+                val intent = Intent(requireContext(), IngredientsDetailActivity::class.java)
+                intent.putExtra(IngredientsDetailActivity.EXTRA_INGREDIENT,data )
+                startActivity(intent)
+            }
+
+        })
     }
 
     private fun setupRecyclerView() {

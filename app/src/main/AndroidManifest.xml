@@ -33,6 +33,9 @@
             android:name=".view.signup.SignupActivity"
             android:exported="false" />
         <activity
+            android:name=".view.ingredients_detail.IngredientsDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.login.LoginActivity"
             android:exported="false" />
         <activity

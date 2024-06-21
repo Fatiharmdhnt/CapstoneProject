@@ -44,7 +44,7 @@ class FavoriteHistoryViewModel(app : Application) : AndroidViewModel(app) {
             val favorites = withContext(Dispatchers.IO) {
                 favDao?.getFavorite()
             }
-            var list : MutableList<AppResponseItem>? = null
+            var list : MutableList<AppResponseItem>? = mutableListOf()  // Initialize the list
             favorites?.forEach {
                 listToAppResponse(it)?.let { it1 -> list?.add(it1) }
             }
@@ -69,7 +69,7 @@ class FavoriteHistoryViewModel(app : Application) : AndroidViewModel(app) {
             val history = withContext(Dispatchers.IO) {
                 hisDao?.getHistory()
             }
-            var list : MutableList<AppResponseItem>? = null
+            var list : MutableList<AppResponseItem>? = mutableListOf()  // Initialize the list
             history?.forEach {
                 ingredientToAppResponse(it)?.let { it1 -> list?.add(it1) }
             }
@@ -80,12 +80,10 @@ class FavoriteHistoryViewModel(app : Application) : AndroidViewModel(app) {
     fun addHistory(ingredient: Ingredient) {
         Log.d("FavoriteHistoryViewModel", "Adding to history: $ingredient")
         CoroutineScope(Dispatchers.IO).launch {
-            hisDao?.addHistory(ingredient)
+            hisDao?.upsertHistory(ingredient)
             Log.d("FavoriteHistoryViewModel", "History added: $ingredient")
         }
     }
-
-
 
     private fun listToAppResponse(ingredients: Ingredients): AppResponseItem? {
         return AppResponseItem(
@@ -112,5 +110,4 @@ class FavoriteHistoryViewModel(app : Application) : AndroidViewModel(app) {
             rekomendasiMenu = ingredient.listRekomendasi
         )
     }
-
 }

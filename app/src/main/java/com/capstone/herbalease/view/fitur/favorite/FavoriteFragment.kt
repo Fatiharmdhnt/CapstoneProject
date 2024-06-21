@@ -36,8 +36,6 @@ class FavoriteFragment : Fragment() {
     }
 
     companion object{
-//        const val EXTRA_FAVORIT = "extra_favorit"
-//        const val EXTRA_HISTORY = "extra_history"
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.favorite,
